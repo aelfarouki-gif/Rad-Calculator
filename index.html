@@ -200,9 +200,69 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
 .sum-val{font-size:18px;font-weight:500}
 .pct-display{font-size:11px;color:var(--text2);margin-top:2px}
 .cat-label{font-size:10px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--text3);margin:16px 0 7px;padding-left:2px}
+
+/* ── LOGIN ── */
+#s-login{display:none;position:fixed;inset:0;background:var(--bg);z-index:9999;flex-direction:column;align-items:center;justify-content:center;padding:24px}
+.login-box{width:100%;max-width:360px;background:var(--surface);border:.5px solid var(--border);border-radius:20px;padding:32px 24px;display:flex;flex-direction:column;gap:16px}
+.login-logo{font-size:42px;text-align:center;margin-bottom:4px}
+.login-title{font-size:22px;font-weight:700;text-align:center;color:var(--text)}
+.login-sub{font-size:12px;color:var(--text3);text-align:center;margin-top:-8px;margin-bottom:4px}
+.login-field{display:flex;flex-direction:column;gap:5px}
+.login-field label{font-size:11px;color:var(--text3);font-weight:500}
+.login-field input{width:100%;padding:12px 14px;border:.5px solid var(--border);border-radius:10px;background:var(--bg);color:var(--text);font-size:14px;outline:none;-webkit-appearance:none;box-sizing:border-box}
+.login-field input:focus{border-color:var(--info-border)}
+.btn-login{background:var(--text);color:var(--bg);border:none;padding:14px;border-radius:12px;font-size:15px;font-weight:600;cursor:pointer;width:100%;margin-top:4px}
+.login-err{background:#fff0f0;border:.5px solid #f5c0c0;border-radius:8px;padding:10px 12px;font-size:12px;color:#c00;display:none;text-align:center}
+/* ── HEADER USER ── */
+.header-user-btn{background:none;border:.5px solid var(--border);border-radius:8px;padding:4px 10px;font-size:12px;color:var(--text2);cursor:pointer;display:flex;align-items:center;gap:5px}
+/* ── STAR FAV ── */
+.sc-star{position:absolute;top:8px;right:8px;background:none;border:none;font-size:18px;cursor:pointer;color:var(--text3);line-height:1;padding:2px 4px;z-index:2;transition:color .15s}
+.sc-star.active{color:#f59e0b}
+.sc-star:active{transform:scale(1.3)}
+.score-card{position:relative}
+/* ── ADMIN BAR ── */
+.sc-admin-bar{display:flex;gap:4px;margin-top:8px;padding-top:8px;border-top:.5px solid var(--border)}
+.sc-adm-btn{background:var(--surface2);border:.5px solid var(--border);border-radius:6px;padding:4px 8px;font-size:11px;cursor:pointer;color:var(--text2)}
+.sc-adm-btn.del{color:#e55;border-color:#f5c0c0}
+/* ── ADMIN SCREEN ── */
+.admin-row{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;background:var(--surface);border:.5px solid var(--border);border-radius:10px;margin-bottom:6px;gap:8px}
+.admin-hidden{opacity:.5}
+.admin-score-info{flex:1;min-width:0}
+.admin-score-name{font-size:13px;font-weight:500;color:var(--text)}
+.admin-score-cat{font-size:11px;color:var(--text3);margin-top:2px}
+.admin-score-actions{display:flex;gap:5px;flex-shrink:0;flex-wrap:wrap}
+.adm-btn-sm{background:var(--surface2);border:.5px solid var(--border);border-radius:7px;padding:5px 9px;font-size:11px;cursor:pointer;color:var(--text2);white-space:nowrap}
+.adm-btn-sm.del{color:#e55}
+/* ── MODAL ── */
+#move-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:8888;align-items:center;justify-content:center;padding:20px}
+.modal-box{background:var(--surface);border-radius:16px;padding:24px;width:100%;max-width:340px;display:flex;flex-direction:column;gap:14px}
+.modal-title{font-size:15px;font-weight:600;color:var(--text)}
+.modal-box select{width:100%;padding:10px;border:.5px solid var(--border);border-radius:9px;background:var(--bg);color:var(--text);font-size:13px}
+.modal-btns{display:flex;gap:8px}
+.modal-btns button{flex:1;padding:11px;border-radius:10px;border:none;font-size:13px;font-weight:500;cursor:pointer}
+.btn-modal-ok{background:var(--text);color:var(--bg)}
+.btn-modal-cancel{background:var(--surface2);color:var(--text);border:.5px solid var(--border)!important;border-style:solid!important}
+/* ── HOME CONTENT WRAPPER ── */
+#home-content{flex:1}
+
 </style>
 </head>
 <body>
+
+<!-- ═══ LOGIN ═══ -->
+<div id="s-login">
+  <div class="login-box">
+    <div class="login-logo">🩺</div>
+    <div class="login-title">Rad Calculator</div>
+    <div class="login-sub">Scores de radiologie · HMIMV</div>
+    <div class="login-field"><label>Identifiant</label><input type="text" id="login-user" placeholder="ex : radiologue" autocomplete="username" autocapitalize="none"/></div>
+    <div class="login-field"><label>Mot de passe</label><input type="password" id="login-pwd" placeholder="••••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()"/></div>
+    <div class="login-err" id="login-err"></div>
+    <button class="btn-login" onclick="doLogin()">Connexion</button>
+  </div>
+</div>
+
+<div id="app-wrap">
 <div class="app">
 
 <!-- HEADER -->
@@ -210,7 +270,7 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
   <div class="logo">
     <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.5"/><line x1="12" y1="3" x2="12" y2="7"/><line x1="12" y1="17" x2="12" y2="21"/><line x1="3" y1="12" x2="7" y2="12"/><line x1="17" y1="12" x2="21" y2="12"/></svg>
   </div>
-  <div><div class="app-name">Rad Calculator</div><div class="app-ver">Scores de radiologie · v1.6</div></div>
+  <div><div class="app-name">Rad Calculator</div><div class="app-ver">Scores de radiologie · v1.6</div><div style="display:flex;align-items:center;gap:6px"><button id="header-user" class="header-user-btn" onclick="showUserMenu()">👤</button></div></div>
 </div>
 
 <!-- INSTALL BANNER -->
@@ -222,71 +282,9 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
 
 <!-- HOME -->
 <div id="s-home" class="screen active">
-    <!-- RADS -->
-  <div class="cat-label">🎯 Systèmes RADS</div>
-  <div class="home-grid">
-    <div class="score-card" onclick="go('lung')"><div class="sc-tag">Thorax · Dépistage</div><div class="sc-name">Lung-RADS</div><div class="sc-desc">Nodules pulmonaires</div><span class="badge rads-2">2022</span><div class="sc-arrow">→</div></div>
-    <div class="score-card" onclick="go('cvo')"><div class="sc-tag">Cardio · ORL</div><div class="sc-name">Cardio / ORL</div><div class="sc-desc">CAD-RADS · NI-RADS IRM</div><div style="display:flex;gap:4px"><span class="badge rads-4a">CAD-RADS</span><span class="badge pir3">NI-RADS</span></div><div class="sc-arrow">→</div></div>
-    <div class="score-card sc-full" onclick="go('pi')"><div class="sc-tag">Prostate · IRM multiparamétrique</div><div class="sc-name">Imagerie prostatique</div><div class="sc-desc">Score lésionnel, qualité IRM, densité du PSA</div><div style="display:flex;gap:4px;flex-wrap:wrap"><span class="badge pir2">PI-RADS v2.1</span><span class="badge pir3">PI-QUAL v2</span><span class="badge pir1">PSA Density</span></div><div class="sc-arrow">→</div></div>
-    <div class="score-card sc-full" onclick="go('bi')"><div class="sc-tag">Sein · Mammo / Écho / IRM</div><div class="sc-name">BI-RADS</div><div class="sc-desc">Classification ACR des lésions mammaires · 3 modalités</div><span class="badge rads-3">ACR 2013</span><div class="sc-arrow">→</div></div>
-    <div class="score-card" onclick="go('eu')"><div class="sc-tag">Thyroïde · Écho</div><div class="sc-name">EU-TIRADS</div><div class="sc-desc">Nodules thyroïdiens</div><span class="badge eu2">ETA 2017</span><div class="sc-arrow">→</div></div>
-    <div class="score-card" onclick="go('acr')"><div class="sc-tag">Thyroïde · Écho</div><div class="sc-name">ACR TI-RADS</div><div class="sc-desc">Système par points</div><span class="badge tr2">ACR 2017</span><div class="sc-arrow">→</div></div>
-    <div class="score-card" onclick="go('li')"><div class="sc-tag">Foie · TDM / IRM / CEUS</div><div class="sc-name">LI-RADS</div><div class="sc-desc">CHC — classification diagnostique</div><span class="badge lr3">v2018 · Diag.</span><div class="sc-arrow">→</div></div>
-    <div class="score-card" onclick="go('ltr')"><div class="sc-tag">Foie · Post-traitement</div><div class="sc-name">LI-RADS TR</div><div class="sc-desc">Évaluation post-thérapeutique CHC</div><span class="badge lr4">v2018 · LR-TR</span><div class="sc-arrow">→</div></div>
-    <div class="score-card" onclick="go('orads')"><div class="sc-tag">Gynéco · Écho</div><div class="sc-name">O-RADS</div><div class="sc-desc">Lésions ovariennes échographie</div><span class="badge pir3">ACR 2022</span><div class="sc-arrow">→</div></div>
-    <div class="score-card" onclick="go('bosniak')"><div class="sc-tag">Rein · CT / IRM</div><div class="sc-name">Bosniak 2019</div><div class="sc-desc">Kystes rénaux</div><span class="badge rads-3">v2019</span><div class="sc-arrow">→</div></div>
-    <div class="score-card" onclick="go('bonerads')"><div class="sc-tag">Os · Imagerie</div><div class="sc-name">ACR Bone-RADS</div><div class="sc-desc">Lésions osseuses incidentales</div><span class="badge tr3">v2023</span><div class="sc-arrow">→</div></div>
-  </div>
-  <!-- RÉPONSE TUMORALE -->
-  <div class="cat-label">📊 Réponse tumorale</div>
-  <div class="home-grid">
-    <div class="score-card sc-full" onclick="go('rt')"><div class="sc-tag">Oncologie · Critères de réponse</div><div class="sc-name">Réponse tumorale</div><div class="sc-desc">6 critères — tumeurs solides, CHC, GIST, lymphomes</div><div style="display:flex;gap:5px;flex-wrap:wrap"><span class="badge rads-2">RECIST 1.1</span><span class="badge rads-2">mRECIST</span><span class="badge rads-3">iRECIST</span><span class="badge tr2">CHESON</span><span class="badge pir2">CHOI</span><span class="badge eu3">EASL</span></div><div class="sc-arrow">→</div></div>
-  </div>
-  <!-- HÉPATOLOGIE -->
-  <div class="cat-label">🫀 Hépatologie & Foie</div>
-  <div class="home-grid">
-    <div class="score-card" onclick="go('hepato')"><div class="sc-tag">Foie · Cirrhose</div><div class="sc-name">Scores hépatiques</div><div class="sc-desc">Child-Pugh · MELD · ALBI · BCLC</div><div style="display:flex;gap:4px;flex-wrap:wrap"><span class="badge lr2">Child-Pugh</span><span class="badge lr3">MELD</span><span class="badge lr4">BCLC</span></div><div class="sc-arrow">→</div></div>
-    <div class="score-card" onclick="go('tace')"><div class="sc-tag">Foie · TACE / IR</div><div class="sc-name">Scores TACE</div><div class="sc-desc">HAP · ART · Stéatose IRM · Volume hépatique</div><div style="display:flex;gap:4px"><span class="badge lr3">HAP</span><span class="badge lr4">ART</span><span class="badge lr2">Stéatose</span></div><div class="sc-arrow">→</div></div>
-  </div>
-  <!-- VASCULAIRE -->
-  <div class="cat-label">🩸 Vasculaire & Embolie pulmonaire</div>
-  <div class="home-grid">
-    <div class="score-card" onclick="go('vasc')"><div class="sc-tag">Vasculaire · Carotide / Aorte</div><div class="sc-name">Vasculaire</div><div class="sc-desc">NASCET · Aortic Size Index · Index résistivité Doppler</div><div style="display:flex;gap:4px"><span class="badge rads-3">NASCET</span><span class="badge rads-4a">Aorte</span></div><div class="sc-arrow">→</div></div>
-    <div class="score-card" onclick="go('ep')"><div class="sc-tag">Thorax · EP</div><div class="sc-name">Embolie pulm.</div><div class="sc-desc">Qanadli · Ratio VD/VG · PESI / sPESI</div><div style="display:flex;gap:4px"><span class="badge rads-4b">Qanadli</span><span class="badge rads-4a">PESI</span></div><div class="sc-arrow">→</div></div>
-  </div>
-  <!-- NEURO -->
-  <div class="cat-label">🧠 Neuroradiologie</div>
-  <div class="home-grid">
-    <div class="score-card sc-full" onclick="go('neuro')"><div class="sc-tag">Neuro · AVC / Hémorragie</div><div class="sc-name">Neuroradiologie</div><div class="sc-desc">ASPECTS · pc-ASPECTS · ICH Score · Spot Sign</div><div style="display:flex;gap:4px;flex-wrap:wrap"><span class="badge rads-4b">ASPECTS</span><span class="badge rads-4a">pc-ASPECTS</span><span class="badge rads-5">ICH</span><span class="badge rads-3">Spot Sign</span></div><div class="sc-arrow">→</div></div>
-  </div>
-  <!-- VOLUMES -->
-  <div class="cat-label">📐 Volumes & Mesures</div>
-  <div class="home-grid">
-    <div class="score-card sc-full" onclick="go('volumes')"><div class="sc-tag">Mesures · Calculs courants</div><div class="sc-name">Volumes & Mesures</div><div class="sc-desc">Ellipsoïde · Thyroïde · Doubling Time · eGFR · IMC</div><div style="display:flex;gap:4px;flex-wrap:wrap"><span class="badge rads-2">Ellipsoïde</span><span class="badge rads-2">Thyroïde</span><span class="badge rads-3">Doubling Time</span><span class="badge pir2">eGFR</span><span class="badge pir1">IMC</span></div><div class="sc-arrow">→</div></div>
-  </div>
-  <!-- SURRÉNALES -->
-  <div class="cat-label">💉 Surrénales</div>
-  <div class="home-grid">
-    <div class="score-card sc-full" onclick="go('surrenales')"><div class="sc-tag">Surrénales · CT / IRM</div><div class="sc-name">Surrénales</div><div class="sc-desc">Chemical Shift IRM · Washout CT (absolu & relatif)</div><div style="display:flex;gap:4px"><span class="badge pir2">Chemical Shift</span><span class="badge pir3">Washout CT</span></div><div class="sc-arrow">→</div></div>
-  </div>
-  <!-- THORAX -->
-  <div class="cat-label">🫁 Thorax & Poumon</div>
-  <div class="home-grid">
-    <div class="score-card" onclick="go('lung')"><div class="sc-tag">Thorax · Dépistage</div><div class="sc-name">Lung-RADS</div><div class="sc-desc">Nodules pulmonaires</div><span class="badge rads-2">2022</span><div class="sc-arrow">→</div></div>
-    <div class="score-card" onclick="go('thorax')"><div class="sc-tag">Thorax · Risque malignité</div><div class="sc-name">Risque nodule</div><div class="sc-desc">Brock Score · Herder Score</div><div style="display:flex;gap:4px"><span class="badge rads-3">Brock</span><span class="badge rads-4a">Herder</span></div><div class="sc-arrow">→</div></div>
-  </div>
-  <!-- TRAUMA -->
-  <div class="cat-label">🚑 Trauma</div>
-  <div class="home-grid">
-    <div class="score-card sc-full" onclick="go('trauma')"><div class="sc-tag">Abdomen · Traumatologie</div><div class="sc-name">Trauma abdominal</div><div class="sc-desc">AAST Foie · AAST Rate · AAST Rein · CTSI / Balthazar</div><div style="display:flex;gap:4px;flex-wrap:wrap"><span class="badge rads-3">AAST Foie</span><span class="badge rads-4a">AAST Rate</span><span class="badge rads-3">AAST Rein</span><span class="badge rads-4b">CTSI</span></div><div class="sc-arrow">→</div></div>
-  </div>
-  <!-- MSK + RI -->
-  <div class="cat-label">🦴 Musculo-squelettique & RI</div>
-  <div class="home-grid">
-    <div class="score-card" onclick="go('msk')"><div class="sc-tag">MSK · Os / Muscles</div><div class="sc-name">Musculo-squelettique</div><div class="sc-desc">Bone-RADS · ESCC/Bilsky · Goutallier</div><div style="display:flex;gap:4px"><span class="badge tr3">Bone-RADS</span><span class="badge rads-4b">ESCC</span></div><div class="sc-arrow">→</div></div>
-    <div class="score-card" onclick="go('ri2')"><div class="sc-tag">RI · Interventionnel</div><div class="sc-name">Radiologie interv.</div><div class="sc-desc">ADD-RS · SINS</div><div style="display:flex;gap:4px"><span class="badge rads-4b">ADD-RS</span><span class="badge rads-4a">SINS</span></div><div class="sc-arrow">→</div></div>
-  </div>
-    <div class="hl">Derniers calculs</div>
+    <div id="home-content"></div>
+
+      <div class="hl">Derniers calculs</div>
   <div id="home-hist"></div>
   <div id="home-empty" class="empty" style="padding:1rem 0">Aucun calcul enregistré</div>
 </div>
@@ -978,7 +976,8 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
 <div id="s-orads" class="screen">
   <div class="screen-header"><button class="back-btn" onclick="home()">← Retour</button><div><div class="screen-title">O-RADS</div><div class="screen-sub">Lésions ovariennes · Échographie · ACR 2022</div></div></div>
   <div class="tabs"><button class="tab active" onclick="ortab('orc',this)">Calculateur</button><button class="tab" onclick="ortab('orref',this)">Référence</button><button class="tab" onclick="ortab('orh',this)">Historique</button></div>
-  <div id="orc"><div class="card">
+    <div class="sub-tabs"><button class="stab active" onclick="setORADS('us',this)">O-RADS US</button><button class="stab" onclick="setORADS('irm',this)">O-RADS IRM</button></div>
+  <div id="orc"><div id="orads-us"><div class="card">
     <div class="ibox">Évaluation des lésions annexielles. Morphologie d'abord, puis Doppler si lésion complexe.</div>
     <div class="step-title">Type de lésion</div>
     <div class="fg"><div class="rg1">
@@ -1006,7 +1005,27 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
     </div>
     <div class="btn-row"><button class="btn-calc" onclick="calcORADS()">Calculer O-RADS</button><button class="btn-reset" onclick="resetORADS()">↺</button></div>
     <div id="or-res" class="rbox" style="display:none"><div class="rheader"><div class="rbig" id="orr-c"></div><div class="rname" id="orr-n"></div><div class="rrisk" id="orr-r"></div><div class="rsuivi" id="orr-s"></div></div><div class="rseq" id="orr-seq"></div></div>
+  </div></div></div>
+
+  <!-- O-RADS IRM -->
+  <div id="orads-irm" style="display:none"><div class="card">
+    <div class="ibox"><strong>O-RADS IRM (V-RADS) :</strong> Classification IRM des lésions ovariennes. Basée sur le score V-RADS (1–5) évaluant la morphologie et le rehaussement. Complémentaire à l'échographie pour les lésions indéterminées.</div>
+    <div class="fg"><label class="fl">Morphologie de la lésion</label><div class="rg1">
+      <label class="opt" onclick="orirmSel('morph','simple',this)"><input type="radio"> Kyste simple uniloculaire anéchogène, lisse — <strong>V-RADS 1</strong></label>
+      <label class="opt" onclick="orirmSel('morph','benin',this)"><input type="radio"> Aspect bénin typique (endométriome, dermoïde, para-ovarian simple) — <strong>V-RADS 2</strong></label>
+      <label class="opt" onclick="orirmSel('morph','uni_sol',this)"><input type="radio"> Uniloculaire avec végétation ou cloison épaisse — <strong>V-RADS 3</strong></label>
+      <label class="opt" onclick="orirmSel('morph','multi',this)"><input type="radio"> Multiloculaire avec végétations ou composante solide partielle — <strong>V-RADS 4</strong></label>
+      <label class="opt" onclick="orirmSel('morph','solide',this)"><input type="radio"> Composante solide dominante ou ascite / carcinose — <strong>V-RADS 5</strong></label>
+    </div></div>
+    <div id="orirm-reh-block" style="display:none"><div class="fg"><label class="fl">Rehaussement de la composante solide</label><div class="rg1">
+      <label class="opt" onclick="orirmSel('reh','absent',this)"><input type="radio"> Absent ou minime (type 1)</label>
+      <label class="opt" onclick="orirmSel('reh','progressif',this)"><input type="radio"> Progressif (type 2–3)</label>
+      <label class="opt" onclick="orirmSel('reh','precoce',this)"><input type="radio"> Précoce intense (type 4) — suspect</label>
+    </div></div></div>
+    <div class="btn-row"><button class="btn-calc" onclick="calcORADSIRM()">Calculer O-RADS IRM</button><button class="btn-reset" onclick="resetORADSIRM()">↺</button></div>
+    <div id="orirm-res" class="rbox" style="display:none"><div class="rheader"><div class="rbig" id="orirmr-c"></div><div class="rname" id="orirmr-n"></div><div class="rrisk" id="orirmr-r"></div><div class="rsuivi" id="orirmr-s"></div></div></div>
   </div></div>
+
   <div id="orref" style="display:none"><div class="card"><div class="tref-wrap"><table class="tref"><thead><tr><th>Cat.</th><th>Risque malin</th><th>Conduite</th></tr></thead><tbody>
     <tr><td><span class="badge rads-1">1</span></td><td>0%</td><td>Ovaires normaux — pas de suivi</td></tr>
     <tr><td><span class="badge rads-2">2</span></td><td>&lt;1%</td><td>Bénin — pas de suivi ou suivi 1 an</td></tr>
@@ -2042,7 +2061,221 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
   </div>
 </div>
 
+<!-- ═══ MYOMES ═══ -->
+<div id="s-myomes" class="screen">
+  <div class="screen-header"><button class="back-btn" onclick="home()">← Retour</button><div><div class="screen-title">Myomes utérins</div><div class="screen-sub">Classification FIGO · Caractérisation IRM</div></div></div>
+  <div class="tabs"><button class="tab active" onclick="myomtab('myomc',this)">Calculateur</button><button class="tab" onclick="myomtab('myomref',this)">Référence</button><button class="tab" onclick="myomtab('myomh',this)">Historique</button></div>
+
+  <div id="myomc">
+    <div class="sub-tabs"><button class="stab active" onclick="setMYOM('figo',this)">Classification FIGO</button><button class="stab" onclick="setMYOM('irm',this)">Caractérisation IRM</button></div>
+
+    <!-- FIGO -->
+    <div id="myom-figo"><div class="card">
+      <div class="ibox"><strong>Classification FIGO des myomes :</strong> Basée sur la localisation par rapport à l'endomètre et à la séreuse. Sélectionner le type sur le schéma ou dans la liste. Types 0–2 = sous-muqueux ; 3–5 = intra-muraux ; 5–7 = sous-séreux.</div>
+      <!-- Interactive SVG uterus diagram -->
+      <div style="display:flex;justify-content:center;margin:12px 0">
+        <svg viewBox="0 0 320 260" width="100%" style="max-width:320px;cursor:pointer" id="figo-svg">
+          <!-- Uterus body -->
+          <ellipse cx="160" cy="130" rx="85" ry="95" fill="#f5e6d0" stroke="#c4956a" stroke-width="2"/>
+          <!-- Endometrial cavity -->
+          <ellipse cx="160" cy="125" rx="28" ry="50" fill="#ffe8e8" stroke="#e8a0a0" stroke-width="1.5"/>
+          <!-- Cervix -->
+          <rect x="140" y="215" width="40" height="35" rx="8" fill="#f0d8b8" stroke="#c4956a" stroke-width="2"/>
+          <!-- Left tube -->
+          <path d="M80,90 Q55,75 40,85 Q30,90 25,105" fill="none" stroke="#c4956a" stroke-width="3" stroke-linecap="round"/>
+          <!-- Right tube -->
+          <path d="M240,90 Q265,75 280,85 Q290,90 295,105" fill="none" stroke="#c4956a" stroke-width="3" stroke-linecap="round"/>
+
+          <!-- Type 0 - pediculated intracavitary -->
+          <circle cx="160" cy="105" r="16" fill="#ffd700" stroke="#b8860b" stroke-width="1.5" class="figo-node" onclick="selectFIGO(0)" id="fn0"/>
+          <text x="160" y="110" text-anchor="middle" font-size="12" font-weight="bold" fill="#333" pointer-events="none">0</text>
+
+          <!-- Type 1 - submucous <50% intramural -->
+          <circle cx="133" cy="118" r="14" fill="#ffd700" stroke="#b8860b" stroke-width="1.5" class="figo-node" onclick="selectFIGO(1)" id="fn1"/>
+          <text x="133" y="123" text-anchor="middle" font-size="12" font-weight="bold" fill="#333" pointer-events="none">1</text>
+
+          <!-- Type 2 - submucous ≥50% intramural -->
+          <circle cx="143" cy="148" r="15" fill="#ffd700" stroke="#b8860b" stroke-width="1.5" class="figo-node" onclick="selectFIGO(2)" id="fn2"/>
+          <text x="143" y="153" text-anchor="middle" font-size="12" font-weight="bold" fill="#333" pointer-events="none">2</text>
+
+          <!-- Type 2-5 transmural label area -->
+          <circle cx="160" cy="168" r="12" fill="#ffd700" stroke="#b8860b" stroke-width="1.5" class="figo-node" onclick="selectFIGO(25)" id="fn25"/>
+          <text x="160" y="173" text-anchor="middle" font-size="9" font-weight="bold" fill="#333" pointer-events="none">2-5</text>
+
+          <!-- Type 3 - intramural touching endo -->
+          <circle cx="185" cy="118" r="14" fill="#ffd700" stroke="#b8860b" stroke-width="1.5" class="figo-node" onclick="selectFIGO(3)" id="fn3"/>
+          <text x="185" y="123" text-anchor="middle" font-size="12" font-weight="bold" fill="#333" pointer-events="none">3</text>
+
+          <!-- Type 4 - purely intramural -->
+          <circle cx="200" cy="148" r="14" fill="#ffd700" stroke="#b8860b" stroke-width="1.5" class="figo-node" onclick="selectFIGO(4)" id="fn4"/>
+          <text x="200" y="153" text-anchor="middle" font-size="12" font-weight="bold" fill="#333" pointer-events="none">4</text>
+
+          <!-- Type 5 - subserous ≥50% intramural -->
+          <circle cx="215" cy="108" r="14" fill="#ffd700" stroke="#b8860b" stroke-width="1.5" class="figo-node" onclick="selectFIGO(5)" id="fn5"/>
+          <text x="215" y="113" text-anchor="middle" font-size="12" font-weight="bold" fill="#333" pointer-events="none">5</text>
+
+          <!-- Type 6 - subserous <50% intramural -->
+          <circle cx="232" cy="80" r="15" fill="#ffd700" stroke="#b8860b" stroke-width="1.5" class="figo-node" onclick="selectFIGO(6)" id="fn6"/>
+          <text x="232" y="85" text-anchor="middle" font-size="12" font-weight="bold" fill="#333" pointer-events="none">6</text>
+
+          <!-- Type 7 - subserous pedunculated -->
+          <circle cx="258" cy="125" r="15" fill="#ffd700" stroke="#b8860b" stroke-width="1.5" class="figo-node" onclick="selectFIGO(7)" id="fn7"/>
+          <text x="258" y="130" text-anchor="middle" font-size="12" font-weight="bold" fill="#333" pointer-events="none">7</text>
+
+          <!-- Type 8 - other (cervical) -->
+          <circle cx="160" cy="230" r="12" fill="#ffd700" stroke="#b8860b" stroke-width="1.5" class="figo-node" onclick="selectFIGO(8)" id="fn8"/>
+          <text x="160" y="235" text-anchor="middle" font-size="12" font-weight="bold" fill="#333" pointer-events="none">8</text>
+        </svg>
+      </div>
+      <!-- Result display -->
+      <div id="figo-res" class="rbox" style="display:none">
+        <div class="rheader">
+          <div class="rbig" id="figor-type"></div>
+          <div class="rname" id="figor-name"></div>
+          <div class="rrisk" id="figor-desc"></div>
+          <div class="rsuivi" id="figor-impact"></div>
+        </div>
+        <div class="rseq" id="figor-seq"></div>
+      </div>
+      <!-- Alternative list selection -->
+      <div class="step-title" style="margin-top:12px">Ou sélectionner dans la liste</div>
+      <div class="fg"><div class="rg1">
+        <label class="opt" onclick="figoFromList(0,this)"><input type="radio"> <strong>Type 0</strong> — Sous-muqueux pédiculé intra-cavitaire</label>
+        <label class="opt" onclick="figoFromList(1,this)"><input type="radio"> <strong>Type 1</strong> — Sous-muqueux &lt;50% intra-mural</label>
+        <label class="opt" onclick="figoFromList(2,this)"><input type="radio"> <strong>Type 2</strong> — Sous-muqueux ≥50% intra-mural</label>
+        <label class="opt" onclick="figoFromList(3,this)"><input type="radio"> <strong>Type 3</strong> — Intra-mural, au contact de l'endomètre (100% intra-mural)</label>
+        <label class="opt" onclick="figoFromList(4,this)"><input type="radio"> <strong>Type 4</strong> — Intra-mural pur (sans contact endo ni séreuse)</label>
+        <label class="opt" onclick="figoFromList(5,this)"><input type="radio"> <strong>Type 5</strong> — Sous-séreux ≥50% intra-mural</label>
+        <label class="opt" onclick="figoFromList(6,this)"><input type="radio"> <strong>Type 6</strong> — Sous-séreux &lt;50% intra-mural</label>
+        <label class="opt" onclick="figoFromList(7,this)"><input type="radio"> <strong>Type 7</strong> — Sous-séreux pédiculé extra-utérin</label>
+        <label class="opt" onclick="figoFromList(25,this)"><input type="radio"> <strong>Type 2–5</strong> — Transmural (contact endo + séreuse)</label>
+        <label class="opt" onclick="figoFromList(8,this)"><input type="radio"> <strong>Type 8</strong> — Autre localisation (cervical, ligamentaire…)</label>
+      </div></div>
+      <div class="btn-row"><button class="btn-reset" onclick="resetFIGO()" style="width:100%">↺ Réinitialiser</button></div>
+    </div></div>
+
+    <!-- IRM CARACTÉRISATION -->
+    <div id="myom-irm" style="display:none"><div class="card">
+      <div class="ibox"><strong>Caractérisation IRM des myomes :</strong> Arbre décisionnel basé sur le signal T2, T1 et l'ADC pour distinguer myome classique, atypique, et léiomyosarcome.</div>
+      <div class="fg"><label class="fl">Signal T2</label><div class="rg1">
+        <label class="opt" onclick="irmSel('t2','hypo',this)"><input type="radio"> <strong>Franc hyposignal T2</strong> — signal très bas, homogène</label>
+        <label class="opt" onclick="irmSel('t2','inter',this)"><input type="radio"> <strong>Signal T2 intermédiaire</strong> — signal modéré ou hétérogène</label>
+        <label class="opt" onclick="irmSel('t2','hyper',this)"><input type="radio"> <strong>Franc hypersignal T2</strong> — signal élevé, liquidien</label>
+      </div></div>
+      <!-- T1 branch (only for intermediate T2) -->
+      <div id="irm-t1-block" style="display:none">
+        <div class="fg"><label class="fl">Signal T1 (± Fat Sat)</label><div class="rg1">
+          <label class="opt" onclick="irmSel('t1','hyper',this)"><input type="radio"> <strong>Hypersignal T1 persistant en T1 Fat Sat</strong> — contenu hémorragique</label>
+          <label class="opt" onclick="irmSel('t1','normal',this)"><input type="radio"> <strong>Pas d'hypersignal T1</strong> — évaluer l'ADC</label>
+        </div></div>
+      </div>
+      <!-- ADC branch -->
+      <div id="irm-adc-block" style="display:none">
+        <div class="fg"><label class="fl">Valeur ADC (×10⁻³ mm²/s)</label><div class="ir">
+          <input type="number" id="irm-adc-val" inputmode="decimal" placeholder="ex : 1.05" min="0" max="3" step="0.01">
+          <span class="unit">×10⁻³</span>
+        </div></div>
+        <div class="rg1" style="margin:8px 0">
+          <label class="opt" onclick="irmSel('adc','haut',this)"><input type="radio"> <strong>ADC &gt;1,2</strong> — élevé</label>
+          <label class="opt" onclick="irmSel('adc','inter',this)"><input type="radio"> <strong>ADC 1,0–1,2</strong> — intermédiaire</label>
+          <label class="opt" onclick="irmSel('adc','bas',this)"><input type="radio"> <strong>ADC 0,8–1,0</strong> — abaissé</label>
+          <label class="opt" onclick="irmSel('adc','tressbas',this)"><input type="radio"> <strong>ADC &lt;0,8</strong> — très abaissé</label>
+        </div>
+      </div>
+      <!-- Rehaussement (for T2 hyper) -->
+      <div id="irm-reh-block" style="display:none">
+        <div class="fg"><label class="fl">Rehaussement après injection</label><div class="rg">
+          <label class="opt" onclick="irmSel('reh','non',this)"><input type="radio"> Pas de rehaussement</label>
+          <label class="opt" onclick="irmSel('reh','oui',this)"><input type="radio"> Rehaussement présent</label>
+        </div></div>
+      </div>
+      <div class="btn-row"><button class="btn-calc" onclick="calcIRM()">Interpréter</button><button class="btn-reset" onclick="resetIRM()">↺</button></div>
+      <div id="irm-res" class="rbox" style="display:none">
+        <div class="rheader">
+          <div class="rbig" id="irmr-diag"></div>
+          <div class="rname" id="irmr-type"></div>
+          <div class="rrisk" id="irmr-risk"></div>
+          <div class="rsuivi" id="irmr-cad"></div>
+        </div>
+        <div class="rseq" id="irmr-detail"></div>
+      </div>
+    </div></div>
+  </div><!-- /myomc -->
+
+  <div id="myomref" style="display:none">
+    <p class="reftitle">Classification FIGO des myomes utérins</p>
+    <div class="card"><div class="tref-wrap"><table class="tref"><thead><tr><th>Type</th><th>Localisation</th><th>Description</th></tr></thead><tbody>
+      <tr><td><span class="badge pir2">0</span></td><td>Sous-muqueux</td><td>Pédiculé intra-cavitaire</td></tr>
+      <tr><td><span class="badge pir2">1</span></td><td>Sous-muqueux</td><td>&lt;50% intra-mural</td></tr>
+      <tr><td><span class="badge pir2">2</span></td><td>Sous-muqueux</td><td>≥50% intra-mural</td></tr>
+      <tr><td><span class="badge rads-3">3</span></td><td>Intra-mural</td><td>Contact endomètre, 100% intra-mural</td></tr>
+      <tr><td><span class="badge rads-3">4</span></td><td>Intra-mural</td><td>100% intra-mural, sans contact endo ni séreuse</td></tr>
+      <tr><td><span class="badge rads-4a">5</span></td><td>Sous-séreux</td><td>≥50% intra-mural</td></tr>
+      <tr><td><span class="badge rads-4a">6</span></td><td>Sous-séreux</td><td>&lt;50% intra-mural</td></tr>
+      <tr><td><span class="badge rads-4b">7</span></td><td>Sous-séreux</td><td>Pédiculé extra-utérin</td></tr>
+      <tr><td><span class="badge rads-3">2–5</span></td><td>Transmural</td><td>Contact endomètre ET séreuse</td></tr>
+      <tr><td><span class="badge rads-1">8</span></td><td>Autre</td><td>Cervical, ligamentaire, parasitaire</td></tr>
+    </tbody></table></div></div>
+    <p class="reftitle">Caractérisation IRM — Arbre décisionnel</p>
+    <div class="card"><div class="ibox">
+      <strong>Hyposignal T2 franc</strong> → Myome sans atypie (type hyalin)<br><br>
+      <strong>Signal T2 intermédiaire</strong> :<br>
+      &nbsp;&nbsp;→ Hypersignal T1 persistant FatSat : <strong>myome en nécrobiose</strong><br>
+      &nbsp;&nbsp;→ Pas de T1+ : évaluer l'ADC<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;→ ADC &gt;1,2 : <strong>myome œdémateux</strong><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;→ ADC 1,0–1,2 : <strong>myome cellulaire</strong><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;→ ADC 0,8–1,0 : <strong>myome atypique</strong> (pronostic incertain)<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;→ ADC &lt;0,8 : <strong>léiomyosarcome à exclure</strong> (urgence)<br><br>
+      <strong>Hypersignal T2 franc</strong> :<br>
+      &nbsp;&nbsp;→ Pas de rehaussement : <strong>myome kystisé</strong><br>
+      &nbsp;&nbsp;→ Rehaussement : <strong>myome myxoïde</strong>
+    </div></div>
+  </div>
+  <div id="myomh" style="display:none"><div id="myom-hist"></div><div id="myom-he" class="empty">Aucun calcul</div><button class="btn-clear" id="myom-hc" onclick="clearMYOMH()" style="display:none">Effacer</button></div>
+</div>
+
+
+<!-- ═══ ADMIN SCREEN ═══ -->
+<div id="s-admin" class="screen">
+  <div class="screen-header">
+    <button class="back-btn" onclick="home()">← Retour</button>
+    <div><div class="screen-title">Administration</div><div class="screen-sub">Gérer les scores et catégories</div></div>
+  </div>
+  <div class="card" style="margin-bottom:12px">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+      <div style="font-size:13px;font-weight:500">Scores ({n} au total)</div>
+      <button class="adm-btn-sm del" onclick="resetAllConfig()">↺ Réinitialiser tout</button>
+    </div>
+    <div id="admin-scores-list"></div>
+  </div>
+  <div class="card">
+    <div style="font-size:12px;color:var(--text3);margin-bottom:10px;font-weight:500">Comptes utilisateurs</div>
+    <div style="font-size:12px;color:var(--text2)">• <strong>radiologue</strong> — accès utilisateur standard<br>• <strong>admin</strong> — accès administrateur complet</div>
+    <div style="margin-top:14px"><button class="btn-calc" style="width:100%" onclick="authLogout()">🔓 Déconnexion</button></div>
+  </div>
+</div>
+
+<!-- ═══ MOVE MODAL ═══ -->
+<div id="move-modal">
+  <div class="modal-box">
+    <div class="modal-title" id="move-modal-title">Déplacer le score</div>
+    <select id="move-cat-sel"></select>
+    <div class="modal-btns">
+      <button class="btn-modal-cancel" onclick="closeModal()">Annuler</button>
+      <button class="btn-modal-ok" onclick="confirmMove()">Déplacer</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ USER MENU ═══ -->
+<div id="user-menu" style="display:none;position:fixed;top:52px;right:12px;background:var(--surface);border:.5px solid var(--border);border-radius:12px;padding:8px;z-index:7777;min-width:160px;box-shadow:0 4px 16px rgba(0,0,0,.12)">
+  <div style="padding:8px 10px;font-size:12px;color:var(--text3);border-bottom:.5px solid var(--border);margin-bottom:4px" id="menu-username"></div>
+  <button onclick="hideUserMenu();goAdmin()" id="menu-admin-btn" style="display:none;width:100%;text-align:left;padding:9px 10px;background:none;border:none;font-size:13px;color:var(--text);cursor:pointer;border-radius:8px">⚙ Administration</button>
+  <button onclick="hideUserMenu();authLogout()" style="width:100%;text-align:left;padding:9px 10px;background:none;border:none;font-size:13px;color:#e55;cursor:pointer;border-radius:8px">🔓 Déconnexion</button>
+</div>
+
 </div><!-- /app -->
+</div><!-- /app-wrap -->
 <script>
 // ─── NAVIGATION ───────────────────────────────────────────────────────────────
 function go(s){screens('active');document.getElementById('s-'+s).classList.add('active');window.scrollTo(0,0);}
@@ -2316,7 +2549,9 @@ function renderH(listId,emptyId,clrId,arr,itemFn){
 function delH(arr,i,listId,emptyId,clrId,itemFn){arr.splice(i,1);renderH(listId,emptyId,clrId,arr,itemFn);save();}
 
 // ─── HOME HIST ────────────────────────────────────────────────────────────────
-function renderHome(){
+// renderHome is now data-driven (see SCORE_REGISTRY)
+// stub kept for compatibility
+function renderHome_old(){
   const all=[
     ...lHist.map(h=>({label:'Lung-RADS '+h.cat,detail:`${h.t||'—'} mm`,css:'rads-'+h.cat.toLowerCase(),date:h.date,time:h.time})),
     ...pHist.map(h=>({label:'PI-RADS '+h.score,detail:h.zone,css:'pir'+h.score,date:h.date,time:h.time})),
@@ -2334,8 +2569,8 @@ function renderHome(){
 }
 
 // ─── PERSISTENCE ──────────────────────────────────────────────────────────────
-function save(){try{localStorage.setItem('rc_v16',JSON.stringify({lHist,pHist,bHist,euHist,acrHist,liHist,trHist,rtHist,cvoHist,hepHist,vascHist,epHist,neuroHist,volHist,surrHist,thorHist,traumHist,mskHist,ri2Hist,tnmHist}));}catch(e){}}
-function load(){try{const d=localStorage.getItem('rc_v16')||localStorage.getItem('rc_v15')||localStorage.getItem('rc_v14')||localStorage.getItem('rc_v13');if(d){const p=JSON.parse(d);lHist=p.lHist||[];pHist=p.pHist||[];bHist=p.bHist||[];euHist=p.euHist||[];acrHist=p.acrHist||[];liHist=p.liHist||[];trHist=p.trHist||[];rtHist=p.rtHist||[];cvoHist=p.cvoHist||[];hepHist=p.hepHist||[];vascHist=p.vascHist||[];epHist=p.epHist||[];neuroHist=p.neuroHist||[];volHist=p.volHist||[];surrHist=p.surrHist||[];thorHist=p.thorHist||[];traumHist=p.traumHist||[];mskHist=p.mskHist||[];ri2Hist=p.ri2Hist||[];tnmHist=p.tnmHist||[];}}catch(e){}renderHome();}
+function save(){try{localStorage.setItem('rc_v16',JSON.stringify({lHist,pHist,bHist,euHist,acrHist,liHist,trHist,rtHist,cvoHist,hepHist,vascHist,epHist,neuroHist,volHist,surrHist,thorHist,traumHist,mskHist,ri2Hist,tnmHist,myomHist}));}catch(e){}}
+function load(){try{const d=localStorage.getItem('rc_v16')||localStorage.getItem('rc_v15')||localStorage.getItem('rc_v14')||localStorage.getItem('rc_v13');if(d){const p=JSON.parse(d);lHist=p.lHist||[];pHist=p.pHist||[];bHist=p.bHist||[];euHist=p.euHist||[];acrHist=p.acrHist||[];liHist=p.liHist||[];trHist=p.trHist||[];rtHist=p.rtHist||[];cvoHist=p.cvoHist||[];hepHist=p.hepHist||[];vascHist=p.vascHist||[];epHist=p.epHist||[];neuroHist=p.neuroHist||[];volHist=p.volHist||[];surrHist=p.surrHist||[];thorHist=p.thorHist||[];traumHist=p.traumHist||[];mskHist=p.mskHist||[];ri2Hist=p.ri2Hist||[];tnmHist=p.tnmHist||[];myomHist=p.myomHist||[];}}catch(e){}renderHome();}
 
 // ─── PWA INSTALL ──────────────────────────────────────────────────────────────
 let deferredPrompt=null;
@@ -3332,12 +3567,547 @@ function renderTNMH() {
 }
 
 
+
+// ─── O-RADS IRM ───────────────────────────────────────────────────────────────
+let orIRMSt = {morph:null, reh:null};
+function setORADS(s, btn) {
+  ['us','irm'].forEach(x=>{const el=document.getElementById('orads-'+x);if(el)el.style.display=x===s?'block':'none';});
+  document.querySelectorAll('#s-orads .stab').forEach(x=>x.classList.remove('active'));
+  btn.classList.add('active');
+}
+function orirmSel(k, v, el) {
+  orIRMSt[k] = v;
+  el.closest('.fg').querySelectorAll('.opt').forEach(x=>x.classList.remove('sel'));
+  el.classList.add('sel');
+  const rehBlock = document.getElementById('orirm-reh-block');
+  if(k==='morph') {
+    const showReh = ['uni_sol','multi','solide'].includes(v);
+    if(rehBlock) rehBlock.style.display = showReh?'block':'none';
+    if(!showReh) { orIRMSt.reh=null; }
+  }
+}
+function calcORADSIRM() {
+  const m = orIRMSt.morph;
+  if(!m){alert('Sélectionner la morphologie');return;}
+  let cat, name, risk, suivi;
+  if(m==='simple'){cat='V-RADS 1';name='Kyste simple bénin';risk='Risque 0%';suivi='Pas de suivi';}
+  else if(m==='benin'){cat='V-RADS 2';name='Probablement bénin';risk='Risque <1%';suivi='Pas de suivi ou contrôle à 1 an';}
+  else if(m==='uni_sol'){
+    const reh=orIRMSt.reh;
+    if(reh==='precoce'){cat='V-RADS 4';name='Risque intermédiaire à élevé';risk='Risque 10–50%';suivi='Avis oncologie gynécologique';}
+    else{cat='V-RADS 3';name='Faible risque';risk='Risque 1–10%';suivi='Suivi IRM 3–6 mois ou avis gynéco';}
+  }
+  else if(m==='multi'){
+    const reh=orIRMSt.reh;
+    if(reh==='precoce'){cat='V-RADS 5';name='Risque élevé';risk='Risque >50%';suivi='Avis oncologie urgent';}
+    else{cat='V-RADS 4';name='Risque intermédiaire';risk='Risque 10–50%';suivi='Avis oncologie gynécologique';}
+  }
+  else{cat='V-RADS 5';name='Risque élevé — composante solide';risk='Risque >50%';suivi='Avis oncologie urgent';}
+  document.getElementById('orirm-res').style.display='block';
+  document.getElementById('orirmr-c').textContent=cat;
+  document.getElementById('orirmr-n').textContent=name;
+  document.getElementById('orirmr-r').textContent=risk;
+  document.getElementById('orirmr-s').textContent=suivi;
+}
+function resetORADSIRM(){orIRMSt={morph:null,reh:null};document.querySelectorAll('#orads-irm .opt').forEach(x=>x.classList.remove('sel'));document.getElementById('orirm-res').style.display='none';const b=document.getElementById('orirm-reh-block');if(b)b.style.display='none';}
+
+// ─── MYOMES — FIGO ────────────────────────────────────────────────────────────
+let myomHist=[];
+const FIGO_DATA = {
+  0:  {name:'Type 0 — Sous-muqueux pédiculé',desc:'Intra-cavitaire, entièrement dans la cavité utérine',impact:'Impact maximal sur la fertilité et les saignements. Résection hystéroscopique possible.',badge:'pir2'},
+  1:  {name:'Type 1 — Sous-muqueux <50% intra-mural',desc:'Moins de la moitié du myome est dans la paroi',impact:'Résection hystéroscopique souvent faisable en 1 ou 2 temps.',badge:'pir2'},
+  2:  {name:'Type 2 — Sous-muqueux ≥50% intra-mural',desc:'Plus de la moitié du myome est dans la paroi',impact:'Résection hystéroscopique complexe, parfois en 2 temps. Impact sur fertilité.',badge:'pir2'},
+  3:  {name:'Type 3 — Intra-mural, contact endomètre',desc:'100% intra-mural mais au contact de l\'endomètre sans franchir la muqueuse',impact:'Peut altérer la fertilité. Voie d\'abord selon taille.',badge:'rads-3'},
+  4:  {name:'Type 4 — Intra-mural pur',desc:'Entièrement dans la paroi, sans contact endo ni séreuse',impact:'Impact modéré sur fertilité. Voie laparoscopique ou laparotomique.',badge:'rads-3'},
+  5:  {name:'Type 5 — Sous-séreux ≥50% intra-mural',desc:'Plus de la moitié dans la paroi, débordant sous la séreuse',impact:'Peu d\'impact sur fertilité/saignements. Traitement si symptomatique.',badge:'rads-4a'},
+  6:  {name:'Type 6 — Sous-séreux <50% intra-mural',desc:'Moins de la moitié dans la paroi, majoritairement sous la séreuse',impact:'Impact minimal sur cavité. Myomectomie laparoscopique.',badge:'rads-4a'},
+  7:  {name:'Type 7 — Sous-séreux pédiculé',desc:'Extra-utérin, relié à l\'utérus par un pédicule',impact:'Pas d\'impact sur cavité. Peut se tordre. Myomectomie laparoscopique.',badge:'rads-4b'},
+  25: {name:'Type 2–5 — Transmural',desc:'Simultanément en contact avec l\'endomètre ET la séreuse',impact:'Classification complexe nécessitant une évaluation complète. Discussion RCP.',badge:'rads-4b'},
+  8:  {name:'Type 8 — Autre localisation',desc:'Cervical, ligamentaire, para-site (greffé sur épiploon)',impact:'Traitement selon localisation et symptômes. IRM pelvienne indispensable.',badge:'rads-1'}
+};
+
+function selectFIGO(type) {
+  // Highlight selected node
+  document.querySelectorAll('.figo-node').forEach(n=>{n.setAttribute('fill','#ffd700');n.setAttribute('stroke','#b8860b');});
+  const node = document.getElementById('fn'+type);
+  if(node){node.setAttribute('fill','#2563eb');node.setAttribute('stroke','#1e40af');}
+  showFIGO(type);
+  // Also sync list
+  document.querySelectorAll('#myom-figo .opt').forEach(o=>o.classList.remove('sel'));
+}
+function figoFromList(type, el) {
+  el.closest('.fg').querySelectorAll('.opt').forEach(o=>o.classList.remove('sel'));
+  el.classList.add('sel');
+  // Highlight node
+  document.querySelectorAll('.figo-node').forEach(n=>{n.setAttribute('fill','#ffd700');n.setAttribute('stroke','#b8860b');});
+  const node = document.getElementById('fn'+type);
+  if(node){node.setAttribute('fill','#2563eb');node.setAttribute('stroke','#1e40af');}
+  showFIGO(type);
+}
+function showFIGO(type) {
+  const d = FIGO_DATA[type];
+  if(!d) return;
+  document.getElementById('figo-res').style.display='block';
+  document.getElementById('figor-type').textContent='FIGO '+type;
+  document.getElementById('figor-name').textContent=d.name;
+  document.getElementById('figor-desc').textContent=d.desc;
+  document.getElementById('figor-impact').textContent=d.impact;
+  document.getElementById('figor-seq').textContent='';
+  const e={date:new Date().toLocaleDateString('fr-FR'),cat:'FIGO Type '+type,detail:d.name,risk:'',suivi:d.impact};
+  myomHist.unshift(e);saveData();renderMYOMH();
+}
+function resetFIGO() {
+  document.getElementById('figo-res').style.display='none';
+  document.querySelectorAll('.figo-node').forEach(n=>{n.setAttribute('fill','#ffd700');n.setAttribute('stroke','#b8860b');});
+  document.querySelectorAll('#myom-figo .opt').forEach(o=>o.classList.remove('sel'));
+}
+
+// ─── MYOMES — IRM ─────────────────────────────────────────────────────────────
+let irmSt = {t2:null,t1:null,adc:null,reh:null};
+function myomtab(t,b){['myomc','myomref','myomh'].forEach(id=>{const el=document.getElementById(id);if(el)el.style.display=id===t?'block':'none';});document.querySelectorAll('#s-myomes .tab').forEach(x=>x.classList.remove('active'));b.classList.add('active');}
+function setMYOM(s,btn){['figo','irm'].forEach(x=>{const el=document.getElementById('myom-'+x);if(el)el.style.display=x===s?'block':'none';});document.querySelectorAll('#myomc .stab').forEach(x=>x.classList.remove('active'));btn.classList.add('active');}
+function irmSel(k, v, el) {
+  irmSt[k]=v;
+  const fg=el.closest('.fg')||el.closest('.rg1');
+  if(fg)fg.querySelectorAll('.opt').forEach(x=>x.classList.remove('sel'));
+  el.classList.add('sel');
+  // Show/hide conditional blocks
+  const t1b=document.getElementById('irm-t1-block');
+  const adcb=document.getElementById('irm-adc-block');
+  const rehb=document.getElementById('irm-reh-block');
+  if(k==='t2'){
+    irmSt.t1=null;irmSt.adc=null;irmSt.reh=null;
+    if(t1b)t1b.style.display=v==='inter'?'block':'none';
+    if(adcb)adcb.style.display='none';
+    if(rehb)rehb.style.display=v==='hyper'?'block':'none';
+    // Reset downstream
+    if(t1b)t1b.querySelectorAll('.opt').forEach(x=>x.classList.remove('sel'));
+    if(adcb)adcb.querySelectorAll('.opt').forEach(x=>x.classList.remove('sel'));
+  }
+  if(k==='t1'){
+    irmSt.adc=null;
+    if(adcb)adcb.style.display=v==='normal'?'block':'none';
+    if(adcb)adcb.querySelectorAll('.opt').forEach(x=>x.classList.remove('sel'));
+  }
+}
+function calcIRM(){
+  const {t2,t1,adc,reh}=irmSt;
+  if(!t2){alert('Sélectionner le signal T2');return;}
+  let diag,type,risk,cad,detail;
+  if(t2==='hypo'){
+    diag='Myome hyalin classique';type='Myome sans atypie (type hyalin)';risk='Bénin — risque de transformation <0.1%';
+    cad='Surveillance. Traitement si symptomatique (ménorragies, compression).';
+    detail='Franc hyposignal T2 homogène = signature du myome classique riche en fibrose et collagène. Pas d\'exploration complémentaire nécessaire.';
+  } else if(t2==='inter'){
+    if(!t1){alert('Sélectionner le signal T1');return;}
+    if(t1==='hyper'){
+      diag='Myome en nécrobiose';type='Nécrobiose (dégénérescence rouge)';risk='Bénin — contexte grossesse fréquent';
+      cad='Traitement conservateur (AINS, antalgiques). Surveillance échographique.';
+      detail='Hypersignal T1 persistant en FatSat = hémorragie intra-myomateuse. Évolue favorablement spontanément en quelques semaines. Fréquent en grossesse.';
+    } else {
+      if(!adc){alert('Sélectionner la valeur ADC');return;}
+      if(adc==='haut'){
+        diag='Myome œdémateux';type='Myome avec dégénérescence myxoïde / œdème';risk='Bénin — signification identique au myome classique';
+        cad='Pas de traitement spécifique. Surveillance standard.';
+        detail='ADC >1.2×10⁻³ avec signal T2 intermédiaire = myome œdémateux ou myxoïde sans caractère agressif. Pas d\'indication à la biopsie.';
+      } else if(adc==='inter'){
+        diag='Myome cellulaire';type='Myome cellulaire (ADC ~1.0)';risk='Probablement bénin — surveillance recommandée';
+        cad='IRM de contrôle à 3–6 mois. Discuter RCP si doute clinique.';
+        detail='ADC 1.0–1.2×10⁻³ = myome cellulaire riche en cellules musculaires. Pronostic incertain, généralement bénin mais nécessite surveillance.';
+      } else if(adc==='bas'){
+        diag='Myome atypique';type='Myome atypique — pronostic incertain';risk='Indéterminé — ADC abaissé (0.8–1.0×10⁻³)';
+        cad='Discussion RCP. IRM de contrôle précoce 6–8 semaines. Biopsie à discuter.';
+        detail='ADC entre 0.8 et 1.0×10⁻³ = zone grise. Peut correspondre à un myome cellulaire densément cellulaire ou une lésion atypique. Surveillance rapprochée indispensable.';
+      } else {
+        diag='⚠ Léiomyosarcome à exclure';type='Lésion suspecte — ADC <0.8×10⁻³';risk='URGENT — risque de léiomyosarcome élevé';
+        cad='Avis oncologie gynécologique URGENT. Biopsie chirurgicale recommandée. Pas de traitement conservateur avant histologie.';
+        detail='ADC <0.8×10⁻³ avec signal T2 intermédiaire est le critère IRM le plus spécifique du léiomyosarcome. Une IRM corps entier pour staging est à discuter.';
+      }
+    }
+  } else { // T2 hyper
+    if(!reh){alert('Sélectionner le rehaussement');return;}
+    if(reh==='non'){
+      diag='Myome kystisé';type='Myome avec dégénérescence kystique';risk='Bénin — dégénérescence liquidienne';
+      cad='Surveillance. Pas d\'indication chirurgicale sauf symptômes.';
+      detail='Hypersignal T2 franc sans rehaussement = nécrose liquidienne. Évolue vers la calcification ou la résorption. Comportement clinique bénin.';
+    } else {
+      diag='Myome myxoïde';type='Myome myxoïde';risk='Principalement bénin — surveillance';
+      cad='Surveillance IRM. Discuter RCP si aspect atypique ou croissance rapide.';
+      detail='Hypersignal T2 avec rehaussement = myome myxoïde ou à composante mucoïde. Habituellement bénin mais peut simuler une tumeur du stroma endométrial.';
+    }
+  }
+  document.getElementById('irm-res').style.display='block';
+  document.getElementById('irmr-diag').textContent=diag;
+  document.getElementById('irmr-type').textContent=type;
+  document.getElementById('irmr-risk').textContent=risk;
+  document.getElementById('irmr-cad').textContent=cad;
+  document.getElementById('irmr-detail').textContent=detail;
+  const e={date:new Date().toLocaleDateString('fr-FR'),cat:diag,detail:type,risk,suivi:cad};
+  myomHist.unshift(e);saveData();renderMYOMH();
+}
+function resetIRM(){
+  irmSt={t2:null,t1:null,adc:null,reh:null};
+  document.querySelectorAll('#myom-irm .opt').forEach(x=>x.classList.remove('sel'));
+  ['irm-t1-block','irm-adc-block','irm-reh-block'].forEach(id=>{const el=document.getElementById(id);if(el)el.style.display='none';});
+  document.getElementById('irm-res').style.display='none';
+}
+function clearMYOMH(){myomHist=[];saveData();renderMYOMH();}
+function renderMYOMH(){const h=document.getElementById('myom-hist'),e=document.getElementById('myom-he'),c=document.getElementById('myom-hc');if(!h)return;h.innerHTML='';if(!myomHist.length){if(e)e.style.display='block';if(c)c.style.display='none';return;}if(e)e.style.display='none';if(c)c.style.display='block';myomHist.slice(0,20).forEach(x=>{const d=document.createElement('div');d.className='hist-item';d.innerHTML='<div class="hi-date">'+x.date+'</div><div class="hi-score">'+x.cat+'</div><div class="hi-detail">'+x.detail+'</div>';h.appendChild(d);});}
+
+
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// ─── SCORE REGISTRY ───────────────────────────────────────────────────────────
+// ═══════════════════════════════════════════════════════════════════════════════
+const SCORE_REGISTRY = [
+  // RADS
+  {id:'lung',   name:'Lung-RADS',         tag:'Thorax · Dépistage',              desc:'Nodules pulmonaires',                       badges:[{t:'2022',c:'rads-2'}],                              cat:'rads'},
+  {id:'cvo',    name:'Cardio / ORL',       tag:'Cardio · ORL',                    desc:'CAD-RADS · NI-RADS IRM',                    badges:[{t:'CAD-RADS',c:'rads-4a'},{t:'NI-RADS',c:'pir3'}],  cat:'rads'},
+  {id:'pi',     name:'Imagerie prostatique',tag:'Prostate · IRM',                  desc:'Score lésionnel, qualité IRM, PSA Density', badges:[{t:'PI-RADS',c:'pir2'},{t:'PI-QUAL',c:'pir3'},{t:'PSA',c:'pir1'}], cat:'rads', full:true},
+  {id:'bi',     name:'BI-RADS',            tag:'Sein · Mammo / Écho / IRM',       desc:'Classification ACR · 3 modalités',          badges:[{t:'ACR 2013',c:'rads-3'}],                          cat:'rads', full:true},
+  {id:'eu',     name:'EU-TIRADS',          tag:'Thyroïde · Écho',                 desc:'Nodules thyroïdiens',                       badges:[{t:'ETA 2017',c:'eu2'}],                             cat:'rads'},
+  {id:'acr',    name:'ACR TI-RADS',        tag:'Thyroïde · Écho',                 desc:'Système par points',                        badges:[{t:'ACR 2017',c:'tr2'}],                             cat:'rads'},
+  {id:'li',     name:'LI-RADS',            tag:'Foie · TDM / IRM / CEUS',         desc:'CHC — classification diagnostique',          badges:[{t:'v2018',c:'lr3'}],                                cat:'rads'},
+  {id:'ltr',    name:'LI-RADS TR',         tag:'Foie · Post-traitement',          desc:'Évaluation post-thérapeutique CHC',         badges:[{t:'LR-TR',c:'lr4'}],                               cat:'rads'},
+  {id:'orads',  name:'O-RADS',             tag:'Gynéco · Écho / IRM',             desc:'Lésions ovariennes US & IRM',               badges:[{t:'ACR 2022',c:'pir3'}],                            cat:'rads'},
+  {id:'bosniak',name:'Bosniak 2019',        tag:'Rein · CT / IRM',                 desc:'Kystes rénaux',                             badges:[{t:'v2019',c:'rads-3'}],                             cat:'rads'},
+  {id:'bonerads',name:'ACR Bone-RADS',     tag:'Os · Imagerie',                   desc:'Lésions osseuses incidentales',             badges:[{t:'v2023',c:'tr3'}],                               cat:'rads'},
+  // RÉPONSE TUMORALE
+  {id:'rt',     name:'Réponse tumorale',   tag:'Oncologie · Critères de réponse', desc:'RECIST · mRECIST · iRECIST · CHESON · CHOI · EASL', badges:[{t:'RECIST',c:'rads-2'},{t:'iRECIST',c:'rads-3'},{t:'CHOI',c:'pir2'}], cat:'tumor', full:true},
+  // HÉPATOLOGIE
+  {id:'hepato', name:'Scores hépatiques',  tag:'Foie · Cirrhose',                 desc:'Child-Pugh · MELD · ALBI · BCLC',          badges:[{t:'Child-Pugh',c:'lr2'},{t:'MELD',c:'lr3'},{t:'BCLC',c:'lr4'}], cat:'hepato'},
+  {id:'tace',   name:'Scores TACE',        tag:'Foie · TACE / IR',                desc:'HAP · ART · Stéatose IRM · Volume',         badges:[{t:'HAP',c:'lr3'},{t:'ART',c:'lr4'},{t:'Stéatose',c:'lr2'}], cat:'hepato'},
+  // VASCULAIRE
+  {id:'vasc',   name:'Vasculaire',         tag:'Vasculaire · Carotide / Aorte',   desc:'NASCET · Aortic Size Index · Index RI',     badges:[{t:'NASCET',c:'rads-3'},{t:'Aorte',c:'rads-4a'}],   cat:'vasc'},
+  {id:'ep',     name:'Embolie pulm.',      tag:'Thorax · EP',                     desc:'Qanadli · Ratio VD/VG · PESI / sPESI',     badges:[{t:'Qanadli',c:'rads-4b'},{t:'PESI',c:'rads-4a'}],  cat:'vasc'},
+  // NEURO
+  {id:'neuro',  name:'Neuroradiologie',    tag:'Neuro · AVC / Hémorragie',        desc:'ASPECTS · pc-ASPECTS · ICH · Spot Sign',   badges:[{t:'ASPECTS',c:'rads-4b'},{t:'ICH',c:'rads-5'},{t:'Spot Sign',c:'rads-3'}], cat:'neuro', full:true},
+  // VOLUMES
+  {id:'volumes',name:'Volumes & Mesures',  tag:'Mesures · Calculs courants',      desc:'Ellipsoïde · Thyroïde · Doubling Time · eGFR · IMC', badges:[{t:'Ellipsoïde',c:'rads-2'},{t:'eGFR',c:'pir2'},{t:'IMC',c:'pir1'}], cat:'volumes', full:true},
+  // SURRÉNALES
+  {id:'surrenales',name:'Surrénales',      tag:'Surrénales · CT / IRM',           desc:'Chemical Shift IRM · Washout CT',          badges:[{t:'Chemical Shift',c:'pir2'},{t:'Washout',c:'pir3'}], cat:'surrenales', full:true},
+  // THORAX
+  {id:'thorax', name:'Risque nodule',      tag:'Thorax · Risque malignité',       desc:'Brock Score · Herder Score',                badges:[{t:'Brock',c:'rads-3'},{t:'Herder',c:'rads-4a'}],   cat:'thorax'},
+  // TRAUMA
+  {id:'trauma', name:'Trauma abdominal',   tag:'Abdomen · Traumatologie',         desc:'AAST Foie · Rate · Rein · CTSI / Balthazar',badges:[{t:'AAST Foie',c:'rads-3'},{t:'CTSI',c:'rads-4b'}], cat:'trauma', full:true},
+  // MSK + RI
+  {id:'msk',    name:'Musculo-squelettique',tag:'MSK · Os / Muscles',             desc:'Bone-RADS · ESCC/Bilsky · Goutallier',     badges:[{t:'Bone-RADS',c:'tr3'},{t:'ESCC',c:'rads-4b'}],    cat:'msk'},
+  {id:'ri2',    name:'Radiologie interv.', tag:'RI · Interventionnel',            desc:'ADD-RS · SINS',                             badges:[{t:'ADD-RS',c:'rads-4b'},{t:'SINS',c:'rads-4a'}],   cat:'msk'},
+  // TNM
+  {id:'tnm',    name:'TNM Tête & Cou',     tag:'ORL · Oncologie · UICC 8e éd.',  desc:'Calculateur de stade — 8 localisations',   badges:[{t:'Cavité buccale',c:'pir3'},{t:'Larynx',c:'rads-4a'},{t:'Thyroïde',c:'lr3'}], cat:'tnm', full:true},
+  // PELVIS
+  {id:'myomes', name:'Myomes utérins',     tag:'Utérus · IRM / Écho',            desc:'Classification FIGO · Caractérisation IRM', badges:[{t:'FIGO',c:'pir2'},{t:'Arbre IRM',c:'rads-3'}],    cat:'pelvis', full:true},
+];
+
+const CATEGORIES = [
+  {id:'rads',      label:'🎯 Systèmes RADS'},
+  {id:'tumor',     label:'📊 Réponse tumorale'},
+  {id:'hepato',    label:'🫀 Hépatologie & Foie'},
+  {id:'vasc',      label:'🩸 Vasculaire & Embolie pulmonaire'},
+  {id:'neuro',     label:'🧠 Neuroradiologie'},
+  {id:'volumes',   label:'📐 Volumes & Mesures'},
+  {id:'surrenales',label:'💉 Surrénales'},
+  {id:'thorax',    label:'🫁 Thorax & Poumon'},
+  {id:'trauma',    label:'🚑 Trauma'},
+  {id:'msk',       label:'🦴 Musculo-squelettique & RI'},
+  {id:'tnm',       label:'🏥 Classification TNM'},
+  {id:'pelvis',    label:'🔵 Imagerie pelvienne'},
+];
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// ─── AUTH ─────────────────────────────────────────────────────────────────────
+// ═══════════════════════════════════════════════════════════════════════════════
+const USERS = {
+  admin: { pwd: 'HMIMV2025', role: 'admin', displayName: 'Administrateur' },
+  radiologue: { pwd: 'radrap', role: 'user', displayName: 'Radiologue' },
+};
+const SESSION_DURATION = 8 * 60 * 60 * 1000; // 8h
+
+let currentUser = null;
+let currentRole = null;
+
+function authLoad() {
+  try {
+    const s = JSON.parse(localStorage.getItem('rc_session') || 'null');
+    if(s && s.role && Date.now() - s.ts < SESSION_DURATION) {
+      currentUser = s.user; currentRole = s.role;
+      return true;
+    }
+  } catch(e){}
+  return false;
+}
+function authSave(user, role) {
+  currentUser = user; currentRole = role;
+  localStorage.setItem('rc_session', JSON.stringify({user, role, ts: Date.now()}));
+}
+function authLogout() {
+  currentUser = null; currentRole = null;
+  localStorage.removeItem('rc_session');
+  showLogin();
+}
+
+function doLogin() {
+  const u = (document.getElementById('login-user').value || '').trim().toLowerCase();
+  const p = document.getElementById('login-pwd').value;
+  const err = document.getElementById('login-err');
+  const match = Object.entries(USERS).find(([k,v]) => k === u && v.pwd === p);
+  if(!match) { err.textContent='Identifiant ou mot de passe incorrect.'; err.style.display='block'; document.getElementById('login-pwd').value=''; return; }
+  err.style.display='none';
+  authSave(u, match[1].role);
+  showApp();
+}
+
+function showLogin() {
+  document.getElementById('app-wrap').style.display='none';
+  document.getElementById('s-login').style.display='flex';
+  document.getElementById('login-user').value='';
+  document.getElementById('login-pwd').value='';
+  document.getElementById('login-err').style.display='none';
+}
+function showApp() {
+  document.getElementById('s-login').style.display='none';
+  document.getElementById('app-wrap').style.display='block';
+  updateHeaderUser();
+  home();
+}
+function updateHeaderUser() {
+  const el = document.getElementById('header-user');
+  if(!el) return;
+  el.textContent = currentRole === 'admin' ? '⚙ Admin' : '👤';
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// ─── CONFIG (favoris, scores cachés, catégories custom) ───────────────────────
+// ═══════════════════════════════════════════════════════════════════════════════
+let rcConfig = { favorites: [], hidden: [], customCat: {} };
+
+function configLoad() {
+  try { rcConfig = JSON.parse(localStorage.getItem('rc_config') || '{}');
+    if(!rcConfig.favorites) rcConfig.favorites=[];
+    if(!rcConfig.hidden) rcConfig.hidden=[];
+    if(!rcConfig.customCat) rcConfig.customCat={};
+  } catch(e) {}
+}
+function configSave() {
+  try { localStorage.setItem('rc_config', JSON.stringify(rcConfig)); } catch(e) {}
+}
+function toggleFav(id, e) {
+  e.stopPropagation();
+  const idx = rcConfig.favorites.indexOf(id);
+  if(idx >= 0) rcConfig.favorites.splice(idx, 1);
+  else rcConfig.favorites.unshift(id);
+  configSave(); renderHome();
+}
+function isFav(id) { return rcConfig.favorites.includes(id); }
+function isHidden(id) { return rcConfig.hidden.includes(id); }
+function getEffectiveCat(score) { return rcConfig.customCat[score.id] || score.cat; }
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// ─── HOME RENDERING (data-driven) ─────────────────────────────────────────────
+// ═══════════════════════════════════════════════════════════════════════════════
+function buildScoreCard(score, inFavSection) {
+  const fav = isFav(score.id);
+  const isAdm = currentRole === 'admin';
+  const badges = score.badges.map(b=>`<span class="badge ${b.c}">${b.t}</span>`).join('');
+  const starClass = fav ? 'sc-star active' : 'sc-star';
+  const starIcon = fav ? '★' : '☆';
+  const cardClass = 'score-card' + (score.full ? ' sc-full' : '');
+
+  let adminBtns = '';
+  if(isAdm) {
+    adminBtns = `<div class="sc-admin-bar">
+      <button class="sc-adm-btn" onclick="openMoveScore('${score.id}',event)" title="Déplacer">✦</button>
+      <button class="sc-adm-btn del" onclick="toggleHide('${score.id}',event)" title="${isHidden(score.id)?'Afficher':'Masquer'}">${isHidden(score.id)?'👁':'🗑'}</button>
+    </div>`;
+  }
+
+  return `<div class="${cardClass}" onclick="go('${score.id}')">
+    <button class="${starClass}" onclick="toggleFav('${score.id}',event)" title="Favori">${starIcon}</button>
+    <div class="sc-tag">${score.tag}</div>
+    <div class="sc-name">${score.name}</div>
+    <div class="sc-desc">${score.desc}</div>
+    <div style="display:flex;gap:4px;flex-wrap:wrap;margin-top:6px">${badges}</div>
+    <div class="sc-arrow">→</div>
+    ${adminBtns}
+  </div>`;
+}
+
+function renderHome() {
+  const container = document.getElementById('home-content');
+  if(!container) return;
+
+  let html = '';
+
+  // FAVORIS section
+  const favScores = rcConfig.favorites.map(id => SCORE_REGISTRY.find(s=>s.id===id)).filter(Boolean);
+  if(favScores.length > 0) {
+    html += '<div class="cat-label">⭐ Favoris</div><div class="home-grid">';
+    favScores.forEach(s => { html += buildScoreCard(s, true); });
+    html += '</div>';
+  }
+
+  // CATEGORIES
+  CATEGORIES.forEach(cat => {
+    const scores = SCORE_REGISTRY.filter(s => {
+      const effectiveCat = getEffectiveCat(s);
+      return effectiveCat === cat.id && !isHidden(s.id);
+    });
+    if(scores.length === 0) return;
+    html += `<div class="cat-label">${cat.label}</div><div class="home-grid">`;
+    scores.forEach(s => { html += buildScoreCard(s, false); });
+    html += '</div>';
+  });
+
+  // Admin: show hidden scores section
+  if(currentRole === 'admin' && rcConfig.hidden.length > 0) {
+    html += '<div class="cat-label" style="color:#e55">🗑 Scores masqués (admin)</div><div class="home-grid">';
+    rcConfig.hidden.forEach(id => {
+      const s = SCORE_REGISTRY.find(x=>x.id===id);
+      if(!s) return;
+      html += `<div class="score-card" style="opacity:.5" onclick="go('${s.id}')">
+        <div class="sc-name">${s.name}</div>
+        <div class="sc-desc">Masqué</div>
+        <button class="sc-adm-btn" onclick="toggleHide('${s.id}',event)" style="position:absolute;top:8px;right:8px">👁 Afficher</button>
+      </div>`;
+    });
+    html += '</div>';
+  }
+
+  container.innerHTML = html;
+
+  // Update recent calcs
+  renderRecentCalcs();
+}
+
+function renderRecentCalcs() {
+  const all = [
+    ...lHist.map(x=>({...x,k:'Lung-RADS'})),
+    ...pHist.map(x=>({...x,k:'PI-RADS'})),
+    ...(bHist||[]).map(x=>({...x,k:'BI-RADS'})),
+    ...(euHist||[]).map(x=>({...x,k:'EU-TIRADS'})),
+    ...(acrHist||[]).map(x=>({...x,k:'TI-RADS'})),
+    ...(liHist||[]).map(x=>({...x,k:'LI-RADS'})),
+    ...(trHist||[]).map(x=>({...x,k:'LI-RADS TR'})),
+    ...(rtHist||[]).map(x=>({...x,k:'Réponse'})),
+    ...(cvoHist||[]).map(x=>({...x,k:'CAD/NI-RADS'})),
+    ...(hepHist||[]).map(x=>({...x,k:'Hépatologie'})),
+    ...(vascHist||[]).map(x=>({...x,k:'Vasculaire'})),
+    ...(epHist||[]).map(x=>({...x,k:'EP'})),
+    ...(neuroHist||[]).map(x=>({...x,k:'Neuro'})),
+    ...(volHist||[]).map(x=>({...x,k:'Volumes'})),
+    ...(surrHist||[]).map(x=>({...x,k:'Surrénales'})),
+    ...(thorHist||[]).map(x=>({...x,k:'Thorax'})),
+    ...(traumHist||[]).map(x=>({...x,k:'Trauma'})),
+    ...(mskHist||[]).map(x=>({...x,k:'MSK'})),
+    ...(ri2Hist||[]).map(x=>({...x,k:'RI'})),
+    ...(tnmHist||[]).map(x=>({...x,k:'TNM'})),
+    ...(myomHist||[]).map(x=>({...x,k:'Myomes'})),
+  ];
+  all.sort((a,b)=>{ try{return new Date(b.date.split('/').reverse().join('-'))-new Date(a.date.split('/').reverse().join('-'));}catch(e){return 0;} });
+  const top = all.slice(0,5);
+  const he = document.getElementById('home-empty');
+  const hh = document.getElementById('home-hist');
+  if(!hh) return;
+  if(top.length === 0){ hh.innerHTML=''; if(he)he.style.display='block'; return; }
+  if(he)he.style.display='none';
+  hh.innerHTML = top.map(x=>`<div class="hist-item"><span class="badge rads-2" style="font-size:10px">${x.cat||x.k}</span> <span style="font-size:11px;color:var(--text2)">${x.detail||''}</span><span class="hi-date">${x.date}</span></div>`).join('');
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// ─── ADMIN PANEL ──────────────────────────────────────────────────────────────
+// ═══════════════════════════════════════════════════════════════════════════════
+function toggleHide(id, e) {
+  e.stopPropagation();
+  const idx = rcConfig.hidden.indexOf(id);
+  if(idx>=0) rcConfig.hidden.splice(idx,1);
+  else rcConfig.hidden.push(id);
+  // also remove from favorites if hidden
+  const fi = rcConfig.favorites.indexOf(id);
+  if(fi>=0 && idx<0) rcConfig.favorites.splice(fi,1);
+  configSave(); renderHome();
+}
+
+function openMoveScore(id, e) {
+  e.stopPropagation();
+  const s = SCORE_REGISTRY.find(x=>x.id===id);
+  if(!s) return;
+  const cur = getEffectiveCat(s);
+  const modal = document.getElementById('move-modal');
+  const title = document.getElementById('move-modal-title');
+  const sel = document.getElementById('move-cat-sel');
+  title.textContent = 'Déplacer : ' + s.name;
+  sel.innerHTML = CATEGORIES.map(c=>`<option value="${c.id}"${c.id===cur?' selected':''}>${c.label}</option>`).join('');
+  modal.dataset.scoreId = id;
+  modal.style.display = 'flex';
+}
+function confirmMove() {
+  const modal = document.getElementById('move-modal');
+  const id = modal.dataset.scoreId;
+  const newCat = document.getElementById('move-cat-sel').value;
+  const s = SCORE_REGISTRY.find(x=>x.id===id);
+  if(s && newCat !== s.cat) rcConfig.customCat[id] = newCat;
+  else if(s && newCat === s.cat) delete rcConfig.customCat[id];
+  configSave(); modal.style.display='none'; renderHome();
+}
+function closeModal() { document.getElementById('move-modal').style.display='none'; }
+
+function goAdmin() { document.getElementById('move-modal').style.display='none'; screens('active'); document.getElementById('s-admin').classList.add('active'); renderAdmin(); }
+function renderAdmin() {
+  const cnt = document.getElementById('admin-scores-list');
+  if(!cnt) return;
+  cnt.innerHTML = SCORE_REGISTRY.map(s => {
+    const hidden = isHidden(s.id);
+    const catLabel = CATEGORIES.find(c=>c.id===getEffectiveCat(s))?.label || getEffectiveCat(s);
+    return `<div class="admin-row ${hidden?'admin-hidden':''}">
+      <div class="admin-score-info">
+        <div class="admin-score-name">${hidden?'🗑 ':''}${s.name}</div>
+        <div class="admin-score-cat">${catLabel}</div>
+      </div>
+      <div class="admin-score-actions">
+        <button class="adm-btn-sm" onclick="openMoveScore('${s.id}',event)">✦ Déplacer</button>
+        <button class="adm-btn-sm ${hidden?'':'del'}" onclick="toggleHide('${s.id}',event);renderAdmin()">${hidden?'👁 Afficher':'🗑 Masquer'}</button>
+        ${isFav(s.id)?`<button class="adm-btn-sm" onclick="toggleFav('${s.id}',event);renderAdmin()">★ Retirer fav.</button>`:''}
+      </div>
+    </div>`;
+  }).join('');
+}
+function resetAllConfig() {
+  if(!confirm('Réinitialiser favoris, catégories et scores masqués ?')) return;
+  rcConfig={favorites:[],hidden:[],customCat:{}}; configSave(); home();
+}
+
+
+// ── USER MENU ────────────────────────────────────────────────────────────────
+function showUserMenu() {
+  const m = document.getElementById('user-menu');
+  const un = document.getElementById('menu-username');
+  const ab = document.getElementById('menu-admin-btn');
+  if(un) un.textContent = (currentUser||'') + (currentRole==='admin'?' · Admin':'· Utilisateur');
+  if(ab) ab.style.display = currentRole==='admin'?'block':'none';
+  m.style.display = m.style.display==='none'?'block':'none';
+}
+function hideUserMenu() { document.getElementById('user-menu').style.display='none'; }
+document.addEventListener('click', e=>{
+  const m=document.getElementById('user-menu');
+  const btn=document.getElementById('header-user');
+  if(m&&btn&&!m.contains(e.target)&&!btn.contains(e.target)) m.style.display='none';
+});
+// fix saveData alias
+function saveData() { save(); }
+
+
 // ─── INIT ─────────────────────────────────────────────────────────────────────
 buildSO('dwi-o',dwiD,'dwi');buildSO('t2zp-o',t2zpD,'t2zp');buildSO('t2zt-o',t2ztD,'t2zt');buildSO('dwizt-o',dwiD,'dwizt');
 buildTargets('recist-targets',5,'recist','recist');
 buildTargets('mr-targets',3,'mr','mr');
 buildTargets('ir-targets',5,'ir','ir');
-load();
+configLoad();
+if(authLoad()) {
+  load();
+  showApp();
+} else {
+  showLogin();
+}
 </script>
 </body>
 </html>
