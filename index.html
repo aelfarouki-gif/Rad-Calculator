@@ -1309,221 +1309,6 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
   <div id="myomh" style="display:none"><div id="myom-hist"></div><div id="myom-he" class="empty">Aucun calcul</div><button class="btn-clear" id="myom-hc" onclick="clearHist('myomHist',renderMYOMH)" style="display:none">Effacer</button></div>
 </div>
 
-<!-- ═══ TNM TÊTE & COU ═══ -->
-<div id="s-tnm" class="screen">
-  <div class="screen-header"><button class="back-btn" onclick="home()">← Retour</button><div><div class="screen-title">TNM Tête et Cou</div><div class="screen-sub">UICC 8e édition · 2017</div></div></div>
-  <div class="tabs"><button class="tab active" onclick="tnmtab('tnmc',this)">Calculateur</button><button class="tab" onclick="tnmtab('tnmref',this)">Référence</button><button class="tab" onclick="tnmtab('tnmh',this)">Historique</button></div>
-  <div id="tnmc">
-    <div class="sub-tabs" style="flex-wrap:wrap">
-      <button class="stab active" onclick="setTNM('cb',this)">Cavité buccale</button>
-      <button class="stab" onclick="setTNM('oro',this)">Oropharynx</button>
-      <button class="stab" onclick="setTNM('naso',this)">Nasopharynx</button>
-      <button class="stab" onclick="setTNM('hypo',this)">Hypopharynx</button>
-      <button class="stab" onclick="setTNM('larynx',this)">Larynx</button>
-      <button class="stab" onclick="setTNM('sinus',this)">Sinus/FN</button>
-      <button class="stab" onclick="setTNM('thyroide',this)">Thyroide</button>
-      <button class="stab" onclick="setTNM('salivaires',this)">Salivaires</button>
-    </div>
-    <div id="tnm-cb"><div class="card">
-      <div class="ibox"><strong>Cavite buccale</strong> — DOI (profondeur invasion) integree depuis la 8e ed. ENE = extension extra-nodale.</div>
-      <div class="fg"><label class="fl">T</label><div class="rg1">
-        <label class="opt" onclick="tnmSel('cb','T','Tis',this)"><input type="radio"> Tis — Carcinome in situ</label>
-        <label class="opt" onclick="tnmSel('cb','T','T1',this)"><input type="radio"> T1 — 2 cm et DOI 5 mm</label>
-        <label class="opt" onclick="tnmSel('cb','T','T2',this)"><input type="radio"> T2 — 2 cm DOI 5-10 mm, ou 2-4 cm DOI 10 mm</label>
-        <label class="opt" onclick="tnmSel('cb','T','T3',this)"><input type="radio"> T3 — 4 cm ou DOI 10 mm</label>
-        <label class="opt" onclick="tnmSel('cb','T','T4a',this)"><input type="radio"> T4a — Corticale osseuse, nerf alveolaire, plancher, peau</label>
-        <label class="opt" onclick="tnmSel('cb','T','T4b',this)"><input type="radio"> T4b — Espace masticateur, pterygoides, base crane, carotide</label>
-      </div></div>
-      <div class="fg"><label class="fl">N (avec ENE)</label><div class="rg1">
-        <label class="opt" onclick="tnmSel('cb','N','N0',this)"><input type="radio"> N0 — Pas de metastase ganglionnaire</label>
-        <label class="opt" onclick="tnmSel('cb','N','N1',this)"><input type="radio"> N1 — Unique homolaterale 3 cm, ENE-</label>
-        <label class="opt" onclick="tnmSel('cb','N','N2a',this)"><input type="radio"> N2a — Unique 3-6 cm ENE-, ou 3 cm ENE+</label>
-        <label class="opt" onclick="tnmSel('cb','N','N2b',this)"><input type="radio"> N2b — Multiples homolaterales 6 cm, ENE-</label>
-        <label class="opt" onclick="tnmSel('cb','N','N2c',this)"><input type="radio"> N2c — Bilaterales/controlaterales 6 cm, ENE-</label>
-        <label class="opt" onclick="tnmSel('cb','N','N3a',this)"><input type="radio"> N3a — 6 cm, ENE-</label>
-        <label class="opt" onclick="tnmSel('cb','N','N3b',this)"><input type="radio"> N3b — ENE+ clinique ou histologique</label>
-      </div></div>
-      <div class="fg"><label class="fl">M</label><div class="rg">
-        <label class="opt" onclick="tnmSel('cb','M','M0',this)"><input type="radio"> M0</label>
-        <label class="opt" onclick="tnmSel('cb','M','M1',this)"><input type="radio"> M1 — Metastase a distance</label>
-      </div></div>
-      <div class="btn-row"><button class="btn-calc" onclick="calcTNM('cb')">Stade</button><button class="btn-reset" onclick="resetTNM('cb')">↺</button></div>
-      <div id="tnm-cb-res" class="rbox" style="display:none"><div class="rheader"><div class="rbig" id="tnmcbr-s"></div><div class="rname" id="tnmcbr-n"></div><div class="rrisk" id="tnmcbr-r"></div><div class="rsuivi" id="tnmcbr-su"></div></div></div>
-    </div></div>
-    <div id="tnm-oro" style="display:none"><div class="card">
-      <div class="ibox"><strong>Oropharynx</strong> — Staging different selon p16.</div>
-      <div class="fg"><label class="fl">Statut HPV/p16</label><div class="rg">
-        <label class="opt" onclick="tnmSel('oro','hpv','neg',this)"><input type="radio"> p16- (HPV negatif) — avec ENE</label>
-        <label class="opt" onclick="tnmSel('oro','hpv','pos',this)"><input type="radio"> p16+ (HPV positif) — sans ENE</label>
-      </div></div>
-      <div class="fg"><label class="fl">T</label><div class="rg1">
-        <label class="opt" onclick="tnmSel('oro','T','T1',this)"><input type="radio"> T1 — 2 cm</label>
-        <label class="opt" onclick="tnmSel('oro','T','T2',this)"><input type="radio"> T2 — 2-4 cm</label>
-        <label class="opt" onclick="tnmSel('oro','T','T3',this)"><input type="radio"> T3 — 4 cm ou extension epiglottique</label>
-        <label class="opt" onclick="tnmSel('oro','T','T4a',this)"><input type="radio"> T4a — Larynx, muscles profonds, pterygoidien medial, palais, mandibule</label>
-        <label class="opt" onclick="tnmSel('oro','T','T4b',this)"><input type="radio"> T4b — Base crane, carotide (p16- seulement)</label>
-      </div></div>
-      <div class="fg" id="oro-n-neg"><label class="fl">N (p16-)</label><div class="rg1">
-        <label class="opt" onclick="tnmSel('oro','N','N0',this)"><input type="radio"> N0</label>
-        <label class="opt" onclick="tnmSel('oro','N','N1',this)"><input type="radio"> N1 — Unique 3 cm ENE-</label>
-        <label class="opt" onclick="tnmSel('oro','N','N2a',this)"><input type="radio"> N2a — Unique 3-6 cm ENE-</label>
-        <label class="opt" onclick="tnmSel('oro','N','N2b',this)"><input type="radio"> N2b — Multiples 6 cm ENE-</label>
-        <label class="opt" onclick="tnmSel('oro','N','N2c',this)"><input type="radio"> N2c — Bilaterales 6 cm ENE-</label>
-        <label class="opt" onclick="tnmSel('oro','N','N3a',this)"><input type="radio"> N3a — 6 cm ENE-</label>
-        <label class="opt" onclick="tnmSel('oro','N','N3b',this)"><input type="radio"> N3b — ENE+</label>
-      </div></div>
-      <div class="fg" id="oro-n-pos" style="display:none"><label class="fl">N (p16+)</label><div class="rg1">
-        <label class="opt" onclick="tnmSel('oro','N','N0',this)"><input type="radio"> N0</label>
-        <label class="opt" onclick="tnmSel('oro','N','N1',this)"><input type="radio"> N1 — Homolateraux uniques/multiples 6 cm</label>
-        <label class="opt" onclick="tnmSel('oro','N','N2',this)"><input type="radio"> N2 — Bilateraux/controlateraux 6 cm</label>
-        <label class="opt" onclick="tnmSel('oro','N','N3',this)"><input type="radio"> N3 — 6 cm</label>
-      </div></div>
-      <div class="fg"><label class="fl">M</label><div class="rg"><label class="opt" onclick="tnmSel('oro','M','M0',this)"><input type="radio"> M0</label><label class="opt" onclick="tnmSel('oro','M','M1',this)"><input type="radio"> M1</label></div></div>
-      <div class="btn-row"><button class="btn-calc" onclick="calcTNM('oro')">Stade</button><button class="btn-reset" onclick="resetTNM('oro')">↺</button></div>
-      <div id="tnm-oro-res" class="rbox" style="display:none"><div class="rheader"><div class="rbig" id="tnmoror-s"></div><div class="rname" id="tnmoror-n"></div><div class="rrisk" id="tnmoror-r"></div><div class="rsuivi" id="tnmoror-su"></div></div></div>
-    </div></div>
-    <div id="tnm-naso" style="display:none"><div class="card">
-      <div class="ibox"><strong>Nasopharynx</strong> — N-staging specifique sans ENE.</div>
-      <div class="fg"><label class="fl">T</label><div class="rg1">
-        <label class="opt" onclick="tnmSel('naso','T','T1',this)"><input type="radio"> T1 — Nasopharynx, oropharynx, fosses nasales</label>
-        <label class="opt" onclick="tnmSel('naso','T','T2',this)"><input type="radio"> T2 — Extension parapharyngee</label>
-        <label class="opt" onclick="tnmSel('naso','T','T3',this)"><input type="radio"> T3 — Base du crane, vertebres, sinus</label>
-        <label class="opt" onclick="tnmSel('naso','T','T4',this)"><input type="radio"> T4 — Intracranien, nerfs craniens, hypopharynx, orbite</label>
-      </div></div>
-      <div class="fg"><label class="fl">N</label><div class="rg1">
-        <label class="opt" onclick="tnmSel('naso','N','N0',this)"><input type="radio"> N0</label>
-        <label class="opt" onclick="tnmSel('naso','N','N1',this)"><input type="radio"> N1 — Unilaterale 6 cm, au-dessus du cricoide</label>
-        <label class="opt" onclick="tnmSel('naso','N','N2',this)"><input type="radio"> N2 — Bilaterale 6 cm, au-dessus du cricoide</label>
-        <label class="opt" onclick="tnmSel('naso','N','N3',this)"><input type="radio"> N3 — 6 cm ou sous le cricoide</label>
-      </div></div>
-      <div class="fg"><label class="fl">M</label><div class="rg"><label class="opt" onclick="tnmSel('naso','M','M0',this)"><input type="radio"> M0</label><label class="opt" onclick="tnmSel('naso','M','M1',this)"><input type="radio"> M1</label></div></div>
-      <div class="btn-row"><button class="btn-calc" onclick="calcTNM('naso')">Stade</button><button class="btn-reset" onclick="resetTNM('naso')">↺</button></div>
-      <div id="tnm-naso-res" class="rbox" style="display:none"><div class="rheader"><div class="rbig" id="tnmnasor-s"></div><div class="rname" id="tnmnasor-n"></div><div class="rrisk" id="tnmnasor-r"></div><div class="rsuivi" id="tnmnasor-su"></div></div></div>
-    </div></div>
-    <div id="tnm-hypo" style="display:none"><div class="card">
-      <div class="fg"><label class="fl">T</label><div class="rg1">
-        <label class="opt" onclick="tnmSel('hypo','T','T1',this)"><input type="radio"> T1 — Une sous-localisation, 2 cm</label>
-        <label class="opt" onclick="tnmSel('hypo','T','T2',this)"><input type="radio"> T2 — Multiple sites ou 2-4 cm, sans fixation laryngee</label>
-        <label class="opt" onclick="tnmSel('hypo','T','T3',this)"><input type="radio"> T3 — Fixation laryngee ou 4 cm</label>
-        <label class="opt" onclick="tnmSel('hypo','T','T4a',this)"><input type="radio"> T4a — Cartilage, os hyoide, tissus mous</label>
-        <label class="opt" onclick="tnmSel('hypo','T','T4b',this)"><input type="radio"> T4b — Espace prevertebral, carotide, mediastin</label>
-      </div></div>
-      <div class="fg"><label class="fl">N (avec ENE)</label><div class="rg1">
-        <label class="opt" onclick="tnmSel('hypo','N','N0',this)"><input type="radio"> N0</label>
-        <label class="opt" onclick="tnmSel('hypo','N','N1',this)"><input type="radio"> N1</label>
-        <label class="opt" onclick="tnmSel('hypo','N','N2a',this)"><input type="radio"> N2a</label>
-        <label class="opt" onclick="tnmSel('hypo','N','N2b',this)"><input type="radio"> N2b</label>
-        <label class="opt" onclick="tnmSel('hypo','N','N2c',this)"><input type="radio"> N2c</label>
-        <label class="opt" onclick="tnmSel('hypo','N','N3a',this)"><input type="radio"> N3a</label>
-        <label class="opt" onclick="tnmSel('hypo','N','N3b',this)"><input type="radio"> N3b — ENE+</label>
-      </div></div>
-      <div class="fg"><label class="fl">M</label><div class="rg"><label class="opt" onclick="tnmSel('hypo','M','M0',this)"><input type="radio"> M0</label><label class="opt" onclick="tnmSel('hypo','M','M1',this)"><input type="radio"> M1</label></div></div>
-      <div class="btn-row"><button class="btn-calc" onclick="calcTNM('hypo')">Stade</button><button class="btn-reset" onclick="resetTNM('hypo')">↺</button></div>
-      <div id="tnm-hypo-res" class="rbox" style="display:none"><div class="rheader"><div class="rbig" id="tnmhypor-s"></div><div class="rname" id="tnmhypor-n"></div><div class="rrisk" id="tnmhypor-r"></div><div class="rsuivi" id="tnmhypor-su"></div></div></div>
-    </div></div>
-    <div id="tnm-larynx" style="display:none"><div class="card">
-      <div class="fg"><label class="fl">Etage</label><div class="rg3"><label class="opt" onclick="tnmSel('larynx','etage','supra',this)"><input type="radio"> Supraglotte</label><label class="opt" onclick="tnmSel('larynx','etage','glotte',this)"><input type="radio"> Glotte</label><label class="opt" onclick="tnmSel('larynx','etage','sous',this)"><input type="radio"> Sous-glotte</label></div></div>
-      <div class="fg"><label class="fl">T</label><div class="rg1">
-        <label class="opt" onclick="tnmSel('larynx','T','T1',this)"><input type="radio"> T1 — Un site, mobilite normale</label>
-        <label class="opt" onclick="tnmSel('larynx','T','T2',this)"><input type="radio"> T2 — Extension site adjacent, mobilite normale ou diminuee</label>
-        <label class="opt" onclick="tnmSel('larynx','T','T3',this)"><input type="radio"> T3 — Fixation cordale, espace paraglottique</label>
-        <label class="opt" onclick="tnmSel('larynx','T','T4a',this)"><input type="radio"> T4a — Cartilage thyroide, tissus extra-larynges</label>
-        <label class="opt" onclick="tnmSel('larynx','T','T4b',this)"><input type="radio"> T4b — Espace prevertebral, carotide, mediastin</label>
-      </div></div>
-      <div class="fg"><label class="fl">N (avec ENE)</label><div class="rg1">
-        <label class="opt" onclick="tnmSel('larynx','N','N0',this)"><input type="radio"> N0</label>
-        <label class="opt" onclick="tnmSel('larynx','N','N1',this)"><input type="radio"> N1</label>
-        <label class="opt" onclick="tnmSel('larynx','N','N2a',this)"><input type="radio"> N2a</label>
-        <label class="opt" onclick="tnmSel('larynx','N','N2b',this)"><input type="radio"> N2b</label>
-        <label class="opt" onclick="tnmSel('larynx','N','N2c',this)"><input type="radio"> N2c</label>
-        <label class="opt" onclick="tnmSel('larynx','N','N3a',this)"><input type="radio"> N3a</label>
-        <label class="opt" onclick="tnmSel('larynx','N','N3b',this)"><input type="radio"> N3b — ENE+</label>
-      </div></div>
-      <div class="fg"><label class="fl">M</label><div class="rg"><label class="opt" onclick="tnmSel('larynx','M','M0',this)"><input type="radio"> M0</label><label class="opt" onclick="tnmSel('larynx','M','M1',this)"><input type="radio"> M1</label></div></div>
-      <div class="btn-row"><button class="btn-calc" onclick="calcTNM('larynx')">Stade</button><button class="btn-reset" onclick="resetTNM('larynx')">↺</button></div>
-      <div id="tnm-larynx-res" class="rbox" style="display:none"><div class="rheader"><div class="rbig" id="tnmlarynxr-s"></div><div class="rname" id="tnmlarynxr-n"></div><div class="rrisk" id="tnmlarynxr-r"></div><div class="rsuivi" id="tnmlarynxr-su"></div></div></div>
-    </div></div>
-    <div id="tnm-sinus" style="display:none"><div class="card">
-      <div class="fg"><label class="fl">T</label><div class="rg1">
-        <label class="opt" onclick="tnmSel('sinus','T','T1',this)"><input type="radio"> T1 — Muqueuse ou un site</label>
-        <label class="opt" onclick="tnmSel('sinus','T','T2',this)"><input type="radio"> T2 — Erosion infrastructure ou deux sites</label>
-        <label class="opt" onclick="tnmSel('sinus','T','T3',this)"><input type="radio"> T3 — Paroi posterieure, plancher orbite</label>
-        <label class="opt" onclick="tnmSel('sinus','T','T4a',this)"><input type="radio"> T4a — Contenu orbitaire, joue, sinus frontal</label>
-        <label class="opt" onclick="tnmSel('sinus','T','T4b',this)"><input type="radio"> T4b — Apex orbitaire, cerveau, carotide</label>
-      </div></div>
-      <div class="fg"><label class="fl">N (avec ENE)</label><div class="rg1">
-        <label class="opt" onclick="tnmSel('sinus','N','N0',this)"><input type="radio"> N0</label>
-        <label class="opt" onclick="tnmSel('sinus','N','N1',this)"><input type="radio"> N1</label>
-        <label class="opt" onclick="tnmSel('sinus','N','N2a',this)"><input type="radio"> N2a</label>
-        <label class="opt" onclick="tnmSel('sinus','N','N2b',this)"><input type="radio"> N2b</label>
-        <label class="opt" onclick="tnmSel('sinus','N','N2c',this)"><input type="radio"> N2c</label>
-        <label class="opt" onclick="tnmSel('sinus','N','N3a',this)"><input type="radio"> N3a</label>
-        <label class="opt" onclick="tnmSel('sinus','N','N3b',this)"><input type="radio"> N3b — ENE+</label>
-      </div></div>
-      <div class="fg"><label class="fl">M</label><div class="rg"><label class="opt" onclick="tnmSel('sinus','M','M0',this)"><input type="radio"> M0</label><label class="opt" onclick="tnmSel('sinus','M','M1',this)"><input type="radio"> M1</label></div></div>
-      <div class="btn-row"><button class="btn-calc" onclick="calcTNM('sinus')">Stade</button><button class="btn-reset" onclick="resetTNM('sinus')">↺</button></div>
-      <div id="tnm-sinus-res" class="rbox" style="display:none"><div class="rheader"><div class="rbig" id="tnmsinusr-s"></div><div class="rname" id="tnmsinusr-n"></div><div class="rrisk" id="tnmsinusr-r"></div><div class="rsuivi" id="tnmsinusr-su"></div></div></div>
-    </div></div>
-    <div id="tnm-thyroide" style="display:none"><div class="card">
-      <div class="fg"><label class="fl">Histologie</label><div class="rg1">
-        <label class="opt" onclick="tnmSel('thyroide','histo','pf_j',this)"><input type="radio"> Papillaire/Folliculaire — moins de 55 ans</label>
-        <label class="opt" onclick="tnmSel('thyroide','histo','pf_a',this)"><input type="radio"> Papillaire/Folliculaire — 55 ans et plus</label>
-        <label class="opt" onclick="tnmSel('thyroide','histo','med',this)"><input type="radio"> Medullaire</label>
-        <label class="opt" onclick="tnmSel('thyroide','histo','ana',this)"><input type="radio"> Anaplasique — toujours stade IV</label>
-      </div></div>
-      <div class="fg"><label class="fl">T</label><div class="rg1">
-        <label class="opt" onclick="tnmSel('thyroide','T','T1',this)"><input type="radio"> T1 — 2 cm, limite a la thyroide</label>
-        <label class="opt" onclick="tnmSel('thyroide','T','T2',this)"><input type="radio"> T2 — 2-4 cm, limite a la thyroide</label>
-        <label class="opt" onclick="tnmSel('thyroide','T','T3a',this)"><input type="radio"> T3a — 4 cm, limite a la thyroide</label>
-        <label class="opt" onclick="tnmSel('thyroide','T','T3b',this)"><input type="radio"> T3b — Muscles sous-hyoidiens</label>
-        <label class="opt" onclick="tnmSel('thyroide','T','T4a',this)"><input type="radio"> T4a — Larynx, trachee, oesophage, nerf recurrent</label>
-        <label class="opt" onclick="tnmSel('thyroide','T','T4b',this)"><input type="radio"> T4b — Espace prevertebral, carotide</label>
-      </div></div>
-      <div class="fg"><label class="fl">N</label><div class="rg1">
-        <label class="opt" onclick="tnmSel('thyroide','N','N0',this)"><input type="radio"> N0 — Pas de metastase regionale</label>
-        <label class="opt" onclick="tnmSel('thyroide','N','N1a',this)"><input type="radio"> N1a — Niveau VI ou VII</label>
-        <label class="opt" onclick="tnmSel('thyroide','N','N1b',this)"><input type="radio"> N1b — Cervical I-V, retropharynge</label>
-      </div></div>
-      <div class="fg"><label class="fl">M</label><div class="rg"><label class="opt" onclick="tnmSel('thyroide','M','M0',this)"><input type="radio"> M0</label><label class="opt" onclick="tnmSel('thyroide','M','M1',this)"><input type="radio"> M1</label></div></div>
-      <div class="btn-row"><button class="btn-calc" onclick="calcTNM('thyroide')">Stade</button><button class="btn-reset" onclick="resetTNM('thyroide')">↺</button></div>
-      <div id="tnm-thyroide-res" class="rbox" style="display:none"><div class="rheader"><div class="rbig" id="tnmthyroider-s"></div><div class="rname" id="tnmthyroider-n"></div><div class="rrisk" id="tnmthyroider-r"></div><div class="rsuivi" id="tnmthyroider-su"></div></div></div>
-    </div></div>
-    <div id="tnm-salivaires" style="display:none"><div class="card">
-      <div class="fg"><label class="fl">T</label><div class="rg1">
-        <label class="opt" onclick="tnmSel('salivaires','T','T1',this)"><input type="radio"> T1 — 2 cm, sans extension extraparenchymateuse</label>
-        <label class="opt" onclick="tnmSel('salivaires','T','T2',this)"><input type="radio"> T2 — 2-4 cm, sans extension extraparenchymateuse</label>
-        <label class="opt" onclick="tnmSel('salivaires','T','T3',this)"><input type="radio"> T3 — 4 cm ou extension extraparenchymateuse</label>
-        <label class="opt" onclick="tnmSel('salivaires','T','T4a',this)"><input type="radio"> T4a — Peau, mandibule, conduit auditif, nerf facial</label>
-        <label class="opt" onclick="tnmSel('salivaires','T','T4b',this)"><input type="radio"> T4b — Base crane, pterygoides, carotide interne</label>
-      </div></div>
-      <div class="fg"><label class="fl">N (avec ENE)</label><div class="rg1">
-        <label class="opt" onclick="tnmSel('salivaires','N','N0',this)"><input type="radio"> N0</label>
-        <label class="opt" onclick="tnmSel('salivaires','N','N1',this)"><input type="radio"> N1 — Unique 3 cm ENE-</label>
-        <label class="opt" onclick="tnmSel('salivaires','N','N2a',this)"><input type="radio"> N2a — Unique 3-6 cm ENE- ou 3 cm ENE+</label>
-        <label class="opt" onclick="tnmSel('salivaires','N','N2b',this)"><input type="radio"> N2b — Multiples 6 cm ENE-</label>
-        <label class="opt" onclick="tnmSel('salivaires','N','N2c',this)"><input type="radio"> N2c — Bilaterales 6 cm ENE-</label>
-        <label class="opt" onclick="tnmSel('salivaires','N','N3a',this)"><input type="radio"> N3a — 6 cm ENE-</label>
-        <label class="opt" onclick="tnmSel('salivaires','N','N3b',this)"><input type="radio"> N3b — ENE+</label>
-      </div></div>
-      <div class="fg"><label class="fl">M</label><div class="rg"><label class="opt" onclick="tnmSel('salivaires','M','M0',this)"><input type="radio"> M0</label><label class="opt" onclick="tnmSel('salivaires','M','M1',this)"><input type="radio"> M1</label></div></div>
-      <div class="btn-row"><button class="btn-calc" onclick="calcTNM('salivaires')">Stade</button><button class="btn-reset" onclick="resetTNM('salivaires')">↺</button></div>
-      <div id="tnm-salivaires-res" class="rbox" style="display:none"><div class="rheader"><div class="rbig" id="tnmsalivaiреsr-s"></div><div class="rname" id="tnmsalivaiреsr-n"></div><div class="rrisk" id="tnmsalivaiреsr-r"></div><div class="rsuivi" id="tnmsalivaiреsr-su"></div></div></div>
-    </div></div>
-  </div>
-  <div id="tnmref" style="display:none">
-    <p class="reftitle">Stades — CB, Larynx, Hypo, Sinus, Salivaires</p>
-    <div class="card"><div class="tref-wrap"><table class="tref"><thead><tr><th>Stade</th><th>T</th><th>N</th><th>M</th></tr></thead><tbody>
-      <tr><td><span class="badge rads-1">0</span></td><td>Tis</td><td>N0</td><td>M0</td></tr>
-      <tr><td><span class="badge rads-2">I</span></td><td>T1</td><td>N0</td><td>M0</td></tr>
-      <tr><td><span class="badge rads-2">II</span></td><td>T2</td><td>N0</td><td>M0</td></tr>
-      <tr><td><span class="badge rads-3">III</span></td><td>T3 ou T1-T3</td><td>N0 ou N1</td><td>M0</td></tr>
-      <tr><td><span class="badge rads-4a">IVA</span></td><td>T4a ou T1-T4a</td><td>N0-N2</td><td>M0</td></tr>
-      <tr><td><span class="badge rads-4b">IVB</span></td><td>T4b ou Tout T</td><td>N3 ou Tout N</td><td>M0</td></tr>
-      <tr><td><span class="badge rads-5">IVC</span></td><td>Tout T</td><td>Tout N</td><td>M1</td></tr>
-    </tbody></table></div></div>
-  </div>
-  <div id="tnmh" style="display:none"><div id="tnm-hist"></div><div id="tnm-he" class="empty">Aucun calcul</div><button class="btn-clear" id="tnm-hc" onclick="clearHist('tnmHist',renderTNMH)" style="display:none">Effacer</button></div>
-</div>
 
 </div><!-- /app -->
 </div><!-- /app-wrap -->
@@ -1905,28 +1690,43 @@ const SCORE_REGISTRY = [
   {id:'ltr',     name:'LI-RADS TR',         tag:'Foie',        desc:'Post-therapeutique CHC',           cat:'rads', badges:[['LR-TR','lr4']]},
   {id:'orads',   name:'O-RADS',             tag:'Gyneco',      desc:'Lésions ovariennes US et IRM',     cat:'rads', badges:[['ACR 2022','pir3']]},
   {id:'rt',      name:'Reponse tumorale',   tag:'Oncologie',   desc:'RECIST, mRECIST, iRECIST, CHESON, CHOI, EASL', cat:'tumor', full:true, badges:[['RECIST','rads-2'],['CHOI','pir2']]},
-  {id:'tnm',     name:'TNM Tete et Cou',    tag:'ORL',         desc:'Calculateur de stade - 8 localisations', cat:'tnm', full:true, badges:[['UICC 8e','pir3']]},
+
   {id:'myomes',  name:'Myomes uterins',     tag:'Pelvis',      desc:'FIGO et caracterisation IRM',      cat:'pelvis', full:true, badges:[['FIGO','pir2'],['Arbre IRM','rads-3']]},
 ];
 const CATEGORIES = [
   {id:'rads',   label:'Systemes RADS'},
   {id:'tumor',  label:'Reponse tumorale'},
-  {id:'tnm',    label:'Classification TNM'},
   {id:'pelvis', label:'Imagerie pelvienne'},
 ];
 
 // ── AUTH ────────────────────────────────────────────────────────
+// ── BASE USERS (fallback si rc_users vide) ────────────────────
 const BASE_USERS = {
   admin: {pwd:'HMIMV2025', role:'admin', displayName:'Administrateur'},
   radiologue: {pwd:'radrap', role:'user', displayName:'Radiologue'},
 };
-let EXTRA_USERS = {};
+// RC_USERS = base partagée avec l'app CR Type (meme domaine GitHub Pages)
+// Clé localStorage: 'rc_users' — identique dans les deux apps
+let RC_USERS = {};   // chargé depuis localStorage rc_users
 let currentUser = null, currentRole = null;
 const SESSION_MS = 8*60*60*1000;
 
-function usersLoad(){try{EXTRA_USERS=JSON.parse(localStorage.getItem('rc_users')||'{}');}catch(e){}}
-function usersSave(){try{localStorage.setItem('rc_users',JSON.stringify(EXTRA_USERS));}catch(e){}}
-function allUsers(){return Object.assign({},BASE_USERS,EXTRA_USERS);}
+function usersLoad(){
+  try{
+    const stored = JSON.parse(localStorage.getItem('rc_users')||'{}');
+    RC_USERS = stored;
+    // Initialiser la base si vide (1er lancement)
+    let changed = false;
+    Object.keys(BASE_USERS).forEach(function(k){
+      if(!RC_USERS[k]){RC_USERS[k]=Object.assign({},BASE_USERS[k]);changed=true;}
+    });
+    if(changed) usersSave();
+  }catch(e){RC_USERS=Object.assign({},BASE_USERS);}
+}
+function usersSave(){try{localStorage.setItem('rc_users',JSON.stringify(RC_USERS));}catch(e){}}
+function allUsers(){return RC_USERS;}
+// Compat: EXTRA_USERS = tous les utilisateurs hors BASE_USERS
+function isBaseUser(u){return !!BASE_USERS[u];}
 
 function authLoad(){
   try{
@@ -1979,7 +1779,7 @@ function doRegister(){
   if(allUsers()[user]){err.textContent='Identifiant deja utilise.';err.style.display='block';return;}
   if(pwd.length<6){err.textContent='Mot de passe trop court (6 car. min).';err.style.display='block';return;}
   if(pwd!==pwd2){err.textContent='Mots de passe differents.';err.style.display='block';return;}
-  EXTRA_USERS[user]={pwd,role:'user',displayName:name};
+  RC_USERS[user]={pwd,role:'user',displayName:name};
   usersSave();
   authSave(user,'user');
   load();showApp();
@@ -2154,7 +1954,7 @@ function renderAdminUsers(){
   const all=allUsers();
   const rl={admin:'Admin',user:'Utilisateur'};
   c.innerHTML=Object.keys(all).map(function(k){
-    const v=all[k];const isBase=!!BASE_USERS[k];
+    const v=all[k];const isBase=isBaseUser(k);
     return '<div class="admin-row">'
       +'<div class="admin-score-info"><div class="admin-score-name">'+(v.displayName||k)+'</div>'
       +'<div class="admin-score-cat">'+(rl[v.role]||v.role)+' — @'+k+(isBase?' (systeme)':'')+'</div></div>'
@@ -2189,7 +1989,7 @@ function confirmEditUser(){
     BASE_USERS[uid].displayName=name;BASE_USERS[uid].role=role;
     if(pwd)BASE_USERS[uid].pwd=pwd;
   }else{
-    if(!EXTRA_USERS[uid])return;
+    if(!RC_USERS[uid]||isBaseUser(uid))return;
     EXTRA_USERS[uid].displayName=name;EXTRA_USERS[uid].role=role;
     if(pwd)EXTRA_USERS[uid].pwd=pwd;
     usersSave();
@@ -2199,7 +1999,7 @@ function confirmEditUser(){
 function deleteUser(u){
   if(!EXTRA_USERS[u])return;
   if(!confirm('Supprimer @'+u+' ?'))return;
-  delete EXTRA_USERS[u];usersSave();renderAdminUsers();
+  delete RC_USERS[u];usersSave();renderAdminUsers();
 }
 function resetAllConfig(){
   if(!confirm('Reinitialiser favoris et masquages ?'))return;
@@ -2604,114 +2404,12 @@ function renderMYOMH(){
   h.innerHTML=myomHist.slice(0,20).map(function(x){return '<div class="hist-item"><span class="badge rads-3">'+x.cat+'</span> '+x.detail+'<span class="hi-date">'+x.date+'</span></div>';}).join('');
 }
 
-// ── TNM ──────────────────────────────────────────────────────────
-let tnmHist=[];
-let tnmSt={};
-function tnmtab(t,b){['tnmc','tnmref','tnmh'].forEach(function(id){const el=document.getElementById(id);if(el)el.style.display=id===t?'block':'none';});document.querySelectorAll('#s-tnm .tab').forEach(function(x){x.classList.remove('active');});b.classList.add('active');}
-function setTNM(s,b){
-  ['cb','oro','naso','hypo','larynx','sinus','thyroide','salivaires'].forEach(function(x){const el=document.getElementById('tnm-'+x);if(el)el.style.display=x===s?'block':'none';});
-  document.querySelectorAll('#tnmc .stab').forEach(function(x){x.classList.remove('active');});b.classList.add('active');
-}
-function tnmSel(site,key,val,el){
-  if(!tnmSt[site])tnmSt[site]={};
-  tnmSt[site][key]=val;
-  const fg=el.closest('.fg');if(fg)fg.querySelectorAll('.opt').forEach(function(x){x.classList.remove('sel');});
-  el.classList.add('sel');
-  if(site==='oro'&&key==='hpv'){
-    document.getElementById('oro-n-neg').style.display=val==='neg'?'block':'none';
-    document.getElementById('oro-n-pos').style.display=val==='pos'?'block':'none';
-    if(tnmSt['oro'])delete tnmSt['oro']['N'];
-    document.querySelectorAll('#oro-n-neg .opt,#oro-n-pos .opt').forEach(function(x){x.classList.remove('sel');});
-  }
-}
-function stageClassic(T,N,M){
-  if(M==='M1')return 'IVC';
-  if(T==='T4b')return 'IVB';
-  if(['N3','N3a','N3b'].includes(N))return 'IVB';
-  if(T==='T4a'||['N2a','N2b','N2c','N2'].includes(N))return 'IVA';
-  if(T==='T3'||N==='N1')return 'III';
-  if(T==='T2'&&N==='N0')return 'II';
-  if((T==='T1'||T==='Tis')&&N==='N0')return T==='Tis'?'0':'I';
-  return 'I';
-}
-function calcTNM(site){
-  const s=tnmSt[site]||{};
-  const T=s.T,N=s.N,M=s.M;
-  if(!T||!N||!M){alert('Selectionner T, N et M');return;}
-  const sites={cb:'Cavite buccale',oro:'Oropharynx',naso:'Nasopharynx',hypo:'Hypopharynx',larynx:'Larynx',sinus:'Sinus/FN',thyroide:'Thyroide',salivaires:'Salivaires'};
-  let stade,detail,suivi;
-  if(site==='naso'){
-    if(M==='M1')stade='IVC';
-    else if(T==='T4'||N==='N3')stade='IVA';
-    else if(T==='T3'||N==='N2')stade='III';
-    else if(T==='T2'||N==='N1')stade='II';
-    else stade='I';
-    detail='Nasopharynx (UICC 8e)';
-    suivi=stade==='I'||stade==='II'?'Radiochimiotherapie':'Chimiotherapie palliative';
-  }else if(site==='oro'){
-    const hpv=s.hpv;if(!hpv){alert('Selectionner le statut HPV');return;}
-    if(hpv==='pos'){
-      if(M==='M1')stade='IV';
-      else if(T==='T4'||N==='N3')stade='III';
-      else if(T==='T3'||(N==='N2'))stade='II';
-      else stade='I';
-      detail='Oropharynx p16+ (HPV+)';
-    }else{stade=stageClassic(T,N,M);detail='Oropharynx p16-';}
-    suivi='Radiochimiotherapie +/- chirurgie';
-  }else if(site==='thyroide'){
-    const h=s.histo;if(!h){alert('Selectionner le type histologique');return;}
-    const hasN=N==='N1a'||N==='N1b';
-    if(h==='pf_j'){stade=M==='M1'?'II':'I';detail='Pap/Fol <55 ans';}
-    else if(h==='pf_a'){
-      if(M==='M1')stade='IVC';else if(T==='T4b')stade='IVB';else if(T==='T4a')stade='IVA';
-      else if(T==='T3a'||T==='T3b')stade=hasN?'IVA':'III';
-      else stade=hasN?'II':'I';
-      detail='Pap/Fol ≥55 ans';
-    }else if(h==='med'){
-      if(M==='M1')stade='IVC';else if(T==='T4b')stade='IVB';else if(T==='T4a'||N==='N1b')stade='IVA';
-      else if(N==='N1a')stade='III';else if(T==='T2'||T==='T3a'||T==='T3b')stade='II';
-      else stade='I';detail='Medullaire';
-    }else{
-      if(M==='M1')stade='IVC';else if(T==='T3b'||T==='T4a'||T==='T4b'||hasN)stade='IVB';else stade='IVA';
-      detail='Anaplasique - toujours stade IV';
-    }
-    suivi=stade==='I'||stade==='II'?'Thyroidectomie +/- iratherapie':'Traitement oncologique';
-  }else{
-    stade=stageClassic(T,N,M);
-    detail=sites[site]||site;
-    suivi=stade==='I'||stade==='II'?'Chirurgie ou radiotherapie (unimodal)':stade==='IVC'?'Chimiotherapie palliative':'Chirurgie + RT adjuvante +/- chimiotherapie';
-  }
-  const resId='tnm-'+site+'-res';
-  const res=document.getElementById(resId);if(!res)return;
-  res.style.display='block';
-  const el=function(sfx){return res.querySelector('[id$="'+sfx+'"]');};
-  if(el('r-s'))el('r-s').textContent='Stade '+stade;
-  if(el('r-n'))el('r-n').textContent=T+' '+N+' '+M+' — '+detail;
-  if(el('r-r'))el('r-r').textContent='Stade '+stade;
-  if(el('r-su'))el('r-su').textContent=suivi;
-  tnmHist.unshift({date:new Date().toLocaleDateString('fr-FR'),cat:'Stade '+stade,detail:detail+' '+T+N+M,risk:'',suivi});
-  saveAll();renderTNMH();
-}
-function resetTNM(site){
-  tnmSt[site]={};
-  const c=document.getElementById('tnm-'+site);
-  if(c)c.querySelectorAll('.opt').forEach(function(x){x.classList.remove('sel');});
-  const r=document.getElementById('tnm-'+site+'-res');if(r)r.style.display='none';
-  if(site==='oro'){document.getElementById('oro-n-neg').style.display='block';document.getElementById('oro-n-pos').style.display='none';}
-}
-function renderTNMH(){
-  const h=document.getElementById('tnm-hist'),e=document.getElementById('tnm-he'),c=document.getElementById('tnm-hc');
-  if(!h)return;
-  if(!tnmHist.length){h.innerHTML='';if(e)e.style.display='block';if(c)c.style.display='none';return;}
-  if(e)e.style.display='none';if(c)c.style.display='block';
-  h.innerHTML=tnmHist.slice(0,30).map(function(x){return '<div class="hist-item"><span class="badge rads-3">'+x.cat+'</span> '+x.detail+'<span class="hi-date">'+x.date+'</span></div>';}).join('');
-}
 
 // ── HELPER: clearHist ─────────────────────────────────────────────
 function clearHist(histName,renderFn){
   if(histName==='orHist')orHist=[];
   else if(histName==='myomHist')myomHist=[];
-  else if(histName==='tnmHist')tnmHist=[];
+  
   saveAll();if(renderFn)renderFn();
 }
 
@@ -2719,14 +2417,13 @@ function clearHist(histName,renderFn){
 function saveAll(){
   try{
     const d=JSON.parse(localStorage.getItem('rc_v16')||'{}');
-    d.orHist=orHist;d.tnmHist=tnmHist;d.myomHist=myomHist;
+    d.orHist=orHist;d.myomHist=myomHist;
     localStorage.setItem('rc_v16',JSON.stringify(d));
   }catch(e){}
 }
 function loadExtra(p){
   orHist=p.orHist||[];
-  tnmHist=p.tnmHist||[];
-  myomHist=p.myomHist||[];
+    myomHist=p.myomHist||[];
 }
 
 
